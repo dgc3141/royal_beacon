@@ -1,0 +1,6 @@
+{
+    "files.autoSave": "afterDelay",
+    "editor.formatOnSave": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true
+}
