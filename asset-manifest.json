@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.ca3c1f5b.css",
-    "main.js": "/static/js/main.5fa081a1.js",
-    "static/js/453.dcbe65a9.chunk.js": "/static/js/453.dcbe65a9.chunk.js",
-    "index.html": "/index.html",
-    "main.ca3c1f5b.css.map": "/static/css/main.ca3c1f5b.css.map",
-    "main.5fa081a1.js.map": "/static/js/main.5fa081a1.js.map",
-    "453.dcbe65a9.chunk.js.map": "/static/js/453.dcbe65a9.chunk.js.map"
+    "main.css": "/royal_beacon/static/css/main.ca3c1f5b.css",
+    "main.js": "/royal_beacon/static/js/main.0320759b.js",
+    "static/js/453.dcbe65a9.chunk.js": "/royal_beacon/static/js/453.dcbe65a9.chunk.js",
+    "index.html": "/royal_beacon/index.html",
+    "main.ca3c1f5b.css.map": "/royal_beacon/static/css/main.ca3c1f5b.css.map",
+    "main.0320759b.js.map": "/royal_beacon/static/js/main.0320759b.js.map",
+    "453.dcbe65a9.chunk.js.map": "/royal_beacon/static/js/453.dcbe65a9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ca3c1f5b.css",
-    "static/js/main.5fa081a1.js"
+    "static/js/main.0320759b.js"
   ]
 }
