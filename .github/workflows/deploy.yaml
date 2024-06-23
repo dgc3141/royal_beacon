@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - future/
+      - fix/
 
 jobs:
   build-and-deploy:
