@@ -49,7 +49,7 @@ const App: React.FC = () => {
         <div className="arrow" />
       </div>
       <div className="distance">
-        皇居までの距離: {distance ? distance.toFixed(2) : "取得中..."} km
+        Distance: {distance ? distance.toFixed(2) : "Loading..."} km
       </div>
     </div>
   );
