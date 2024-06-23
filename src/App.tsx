@@ -38,8 +38,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (compassRef.current && bearing !== null) {
-      compassRef.current.style.transform = `rotate(${deviceOrientation + bearing
-        }deg)`;
+      const rotation = deviceOrientation + bearing;
+      compassRef.current.style.transform = `rotate(${rotation}deg)`;
     }
   }, [deviceOrientation, bearing]);
 
@@ -60,7 +60,7 @@ const calculateDistance = (
   pointA: { lat: number; lng: number },
   pointB: { lat: number; lng: number }
 ): number => {
-  const earthRadius = 6371; // 地球の半径 (km)
+  const earthRadius = 6378; // 地球の半径 (km)
   const dLat = (pointB.lat - pointA.lat) * (Math.PI / 180);
   const dLon = (pointB.lng - pointA.lng) * (Math.PI / 180);
   const a =
