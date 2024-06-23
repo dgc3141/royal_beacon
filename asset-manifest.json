@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/royal_beacon/static/css/main.ede6e571.css",
-    "main.js": "/royal_beacon/static/js/main.01ca3b58.js",
+    "main.css": "/royal_beacon/static/css/main.d6927acc.css",
+    "main.js": "/royal_beacon/static/js/main.9ba0d4fc.js",
     "static/js/453.dcbe65a9.chunk.js": "/royal_beacon/static/js/453.dcbe65a9.chunk.js",
     "index.html": "/royal_beacon/index.html",
-    "main.ede6e571.css.map": "/royal_beacon/static/css/main.ede6e571.css.map",
-    "main.01ca3b58.js.map": "/royal_beacon/static/js/main.01ca3b58.js.map",
+    "main.d6927acc.css.map": "/royal_beacon/static/css/main.d6927acc.css.map",
+    "main.9ba0d4fc.js.map": "/royal_beacon/static/js/main.9ba0d4fc.js.map",
     "453.dcbe65a9.chunk.js.map": "/royal_beacon/static/js/453.dcbe65a9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ede6e571.css",
-    "static/js/main.01ca3b58.js"
+    "static/css/main.d6927acc.css",
+    "static/js/main.9ba0d4fc.js"
   ]
 }
