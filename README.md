@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+## Royal Beacon: App to show distance and direction to the Imperial Palace
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This app is a simple web app that shows the distance and direction from your current location to the Imperial Palace using a compass.
 
-## Available Scripts
+### Features
 
-In the project directory, you can run:
+- Displays the straight-line distance from your current location to the Imperial Palace in kilometers.
+- The compass rotates according to the orientation of your smartphone, indicating the direction of the Imperial Palace.
+- Displays labels for North, East, South, and West outside the compass.
 
-### `npm start`
+### How to Use
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Access [https://dgc3141.github.io/royal_beacon/](https://dgc3141.github.io/royal_beacon/) using your smartphone's web browser.
+2. Allow the app to use your location.
+3. The distance and direction to the Imperial Palace will be displayed on the compass.
+4. Rotate your smartphone, and the compass will also rotate to always indicate the direction of the Imperial Palace.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Technologies
 
-### `npm test`
+This app is developed using:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React**: JavaScript library for user interface development
+- **TypeScript**: Superset of JavaScript that provides static typing
+- **HTML, CSS**: Describes the structure and style of web pages
+- **GitHub Pages**: Hosting service for static websites
 
-### `npm run build`
+### Developer
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [dgc3141](https://github.com/dgc3141)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Source Code
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The source code for this app is available on [GitHub](https://github.com/dgc3141/royal_beacon).
 
-### `npm run eject`
+### License
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This app is released under the MIT License.
