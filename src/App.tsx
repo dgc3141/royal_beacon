@@ -17,7 +17,6 @@ const App: React.FC = () => {
       };
       setDistance(calculateDistance(currentLatLng, imperialPalaceLatLng));
       setBearing(calculateBearing(currentLatLng, imperialPalaceLatLng));
-      console.log("bearing:", calculateBearing(currentLatLng, imperialPalaceLatLng)); // デバッグログ
     };
 
     const errorCallback = (error: GeolocationPositionError) => {
@@ -29,7 +28,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      console.log("deviceOrientation (alpha):", event.alpha); // デバッグログ
       setDeviceOrientation(event.alpha ?? 0);
     };
 
@@ -41,7 +39,6 @@ const App: React.FC = () => {
   useEffect(() => {
     if (compassRef.current && bearing !== null) {
       const rotation = deviceOrientation + bearing;
-      console.log("rotation:", rotation); // デバッグログ
       compassRef.current.style.transform = `rotate(${rotation}deg)`;
     }
   }, [deviceOrientation, bearing]);
