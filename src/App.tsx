@@ -67,36 +67,6 @@ const App: React.FC = () => {
           <span className="distance-unit">km</span>
         </div>
       </div>
-
-      <div className="position-diagram">
-        <svg width="200" height="200" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="95" stroke="#4a6fa5" strokeWidth="2" fill="none" />
-          <line
-            x1="100"
-            y1="100"
-            x2={100 + 95 * Math.cos((bearing! - 90) * (Math.PI / 180))}
-            y2={100 + 95 * Math.sin((bearing! - 90) * (Math.PI / 180))}
-            stroke="#f47c7c"
-            strokeWidth="2"
-          />
-          <circle cx="100" cy="100" r="5" fill="#4a6fa5" />
-          <circle
-            cx={100 + 95 * Math.cos((bearing! - 90) * (Math.PI / 180))}
-            cy={100 + 95 * Math.sin((bearing! - 90) * (Math.PI / 180))}
-            r="5"
-            fill="#166088"
-          />
-          <text x="90" y="110" fontSize="12" fill="#4a6fa5">現在地</text>
-          <text
-            x={100 + 95 * Math.cos((bearing! - 90) * (Math.PI / 180)) - 10}
-            y={100 + 95 * Math.sin((bearing! - 90) * (Math.PI / 180)) - 5}
-            fontSize="12"
-            fill="#166088"
-          >
-            皇居
-          </text>
-        </svg>
-      </div>
     </div>
   );
 };
