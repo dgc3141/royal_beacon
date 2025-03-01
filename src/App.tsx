@@ -45,11 +45,27 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="compass" ref={compassRef}>
-        <div className="arrow" />
+      <h1 className="app-title">皇居コンパス</h1>
+      <div className="compass-container">
+        <div className="compass" ref={compassRef}>
+          <div className="compass-face">
+            <div className="compass-rose">
+              <div className="direction north">N</div>
+              <div className="direction east">E</div>
+              <div className="direction south">S</div>
+              <div className="direction west">W</div>
+            </div>
+            <div className="arrow"></div>
+            <div className="center-dot"></div>
+          </div>
+        </div>
       </div>
-      <div className="distance">
-        Distance: {distance ? distance.toFixed(2) : "Loading..."} km
+      <div className="distance-card">
+        <div className="distance-label">皇居までの距離</div>
+        <div className="distance">
+          {distance ? distance.toFixed(2) : "読み込み中..."}
+          <span className="distance-unit">km</span>
+        </div>
       </div>
     </div>
   );
