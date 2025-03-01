@@ -160,6 +160,19 @@ body {
   margin-left: 0.3rem;
 }
 
+.position-diagram {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.position-diagram svg {
+  margin: 0 auto;
+}
+
 @media (max-width: 480px) {
   .compass {
     width: 200px;
