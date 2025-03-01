@@ -1,0 +1,10 @@
+{
+  "translation": {
+    "appTitle": "Imperial Palace Compass",
+    "distanceLabel": "Distance to Imperial Palace",
+    "loading": "Loading...",
+    "distanceUnit": "km",
+    "currentLocation": "Current Location",
+    "imperialPalace": "Imperial Palace"
+  }
+}

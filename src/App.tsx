@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import "./App.css";
+import "./i18n";
 
 const imperialPalaceLatLng = { lat: 35.685175, lng: 139.752800 };
 
 const App: React.FC = () => {
+  const { t } = useTranslation();
   const [distance, setDistance] = useState<number | null>(null);
   const [bearing, setBearing] = useState<number | null>(null);
   const [deviceOrientation, setDeviceOrientation] = useState<number>(0);
@@ -45,7 +48,7 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <h1 className="app-title">皇居コンパス</h1>
+      <h1 className="app-title">{t("appTitle")}</h1>
       <div className="compass-container">
         <div className="compass" ref={compassRef} data-testid="compass">
           <div className="compass-face">
@@ -61,10 +64,10 @@ const App: React.FC = () => {
         </div>
       </div>
       <div className="distance-card">
-        <div className="distance-label">皇居までの距離</div>
+        <div className="distance-label">{t("distanceLabel")}</div>
         <div className="distance" data-testid="distance-value">
-          {distance ? distance.toFixed(2) : "読み込み中..."}
-          <span className="distance-unit">km</span>
+          {distance ? distance.toFixed(2) : t("loading")}
+          <span className="distance-unit">{t("distanceUnit")}</span>
         </div>
       </div>
 
@@ -74,26 +77,26 @@ const App: React.FC = () => {
           <line
             x1="100"
             y1="100"
-            x2={100 + 95 * Math.cos((bearing! - 90) * (Math.PI / 180))}
-            y2={100 + 95 * Math.sin((bearing! - 90) * (Math.PI / 180))}
+            x2={bearing !== null ? 100 + 95 * Math.cos((bearing - 90) * (Math.PI / 180)) : 100}
+            y2={bearing !== null ? 100 + 95 * Math.sin((bearing - 90) * (Math.PI / 180)) : 100}
             stroke="#f47c7c"
             strokeWidth="2"
           />
           <circle cx="100" cy="100" r="5" fill="#4a6fa5" />
           <circle
-            cx={100 + 95 * Math.cos((bearing! - 90) * (Math.PI / 180))}
-            cy={100 + 95 * Math.sin((bearing! - 90) * (Math.PI / 180))}
+            cx={bearing !== null ? 100 + 95 * Math.cos((bearing - 90) * (Math.PI / 180)) : 100}
+            cy={bearing !== null ? 100 + 95 * Math.sin((bearing - 90) * (Math.PI / 180)) : 100}
             r="5"
             fill="#166088"
           />
-          <text x="90" y="110" fontSize="12" fill="#4a6fa5">現在地</text>
+          <text x="90" y="110" fontSize="12" fill="#4a6fa5">{t("currentLocation")}</text>
           <text
-            x={100 + 95 * Math.cos((bearing! - 90) * (Math.PI / 180)) - 10}
-            y={100 + 95 * Math.sin((bearing! - 90) * (Math.PI / 180)) - 5}
+            x={bearing !== null ? 100 + 95 * Math.cos((bearing - 90) * (Math.PI / 180)) - 10 : 90}
+            y={bearing !== null ? 100 + 95 * Math.sin((bearing - 90) * (Math.PI / 180)) - 5 : 105}
             fontSize="12"
             fill="#166088"
           >
-            皇居
+            {t("imperialPalace")}
           </text>
         </svg>
       </div>
@@ -103,9 +106,12 @@ const App: React.FC = () => {
 
 // 2点間の距離を計算 (km)
 const calculateDistance = (
-  pointA: { lat: number; lng: number },
-  pointB: { lat: number; lng: number }
+  pointA: { lat: number; lng: number } | null,
+  pointB: { lat: number; lng: number } | null
 ): number => {
+  if (!pointA || !pointB) {
+    return 0;
+  }
   const earthRadius = 6378; // 地球の半径 (km)
   const dLat = (pointB.lat - pointA.lat) * (Math.PI / 180);
   const dLon = (pointB.lng - pointA.lng) * (Math.PI / 180);
@@ -121,9 +127,12 @@ const calculateDistance = (
 
 // 方角を計算
 const calculateBearing = (
-  pointA: { lat: number; lng: number },
-  pointB: { lat: number; lng: number }
+  pointA: { lat: number; lng: number } | null,
+  pointB: { lat: number; lng: number } | null
 ): number => {
+  if (!pointA || !pointB) {
+    return 0;
+  }
   const dLon = (pointB.lng - pointA.lng) * (Math.PI / 180);
   const y = Math.sin(dLon) * Math.cos(pointB.lat * (Math.PI / 180));
   const x =
