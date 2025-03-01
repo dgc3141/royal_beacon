@@ -1,15 +1,19 @@
 :root {
-  --primary-color: #4a6fa5;
-  --secondary-color: #166088;
-  --accent-color: #f47c7c;
-  --background-color: #f9f7f7;
-  --text-color: #112d4e;
+  --primary-color: #007bff; /* より鮮やかな青 */
+  --secondary-color: #6c757d; /* 落ち着いたグレー */
+  --accent-color: #ffc107; /* 明るい黄色 */
+  --background-color: #f8f9fa; /* 明るいグレー */
+  --text-color: #343a40; /* 濃いグレー */
+  --compass-bg: #fff; /* コンパスの背景色 */
+  --compass-border: #e0e0e0; /* コンパスのボーダー色 */
+  --arrow-color: #dc3545; /* 矢印の色 */
 }
 
 body {
-  background: linear-gradient(135deg, var(--background-color), #e3f2fd);
+  background: linear-gradient(135deg, var(--background-color), #ced4da);
   color: var(--text-color);
   min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* モダンなフォント */
 }
 
 .container {
@@ -23,28 +27,29 @@ body {
 }
 
 .app-title {
-  font-size: 2rem;
+  font-size: 2.5rem; /* 大きめのフォントサイズ */
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem; /* 余白を増やす */
   color: var(--primary-color);
   text-align: center;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 影を濃く */
 }
 
 .compass-container {
   position: relative;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem; /* 余白を増やす */
 }
 
 .compass {
-  width: 250px;
-  height: 250px;
+  width: 280px; /* 大きくする */
+  height: 280px; /* 大きくする */
   border-radius: 50%;
-  background: white;
+  background: var(--compass-bg);
   position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 8px solid var(--primary-color);
-  transition: transform 0.5s ease-out;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2); /* 影を濃く */
+  border: 10px solid var(--compass-border); /* ボーダーを太く */
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* より滑らかなアニメーション */
+  overflow: hidden; /* はみ出す部分を隠す */
 }
 
 .compass-face {
@@ -61,64 +66,69 @@ body {
 
 .compass-rose {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 90%; /* 少し小さく */
+  height: 90%; /* 少し小さく */
   border-radius: 50%;
+  background: linear-gradient(45deg, #f0f0f0, #e8e8e8); /* グラデーション */
 }
 
 .direction {
   position: absolute;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* 大きくする */
   color: var(--secondary-color);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .direction.north {
-  top: 10px;
+  top: 15px; /* 位置調整 */
   left: 50%;
   transform: translateX(-50%);
 }
 
 .direction.east {
-  right: 10px;
+  right: 15px; /* 位置調整 */
   top: 50%;
   transform: translateY(-50%);
 }
 
 .direction.south {
-  bottom: 10px;
+  bottom: 15px; /* 位置調整 */
   left: 50%;
   transform: translateX(-50%);
 }
 
 .direction.west {
-  left: 10px;
+  left: 15px; /* 位置調整 */
   top: 50%;
   transform: translateY(-50%);
 }
 
 .arrow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  width: 4px;
-  height: 110px;
-  background: linear-gradient(to top, var(--accent-color), var(--accent-color) 70%, transparent 70%, transparent);
-  z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%) rotate(-45deg); /* 初期角度を調整 */
+    width: 6px;
+    height: 120px;
+    background: linear-gradient(to top, var(--arrow-color), var(--arrow-color) 70%, transparent 70%, transparent);
+    z-index: 10;
+    border-radius: 3px; /* 角を丸く */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* 影を追加 */
 }
 
 .arrow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 20px solid var(--accent-color);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 24px solid var(--arrow-color); /* 大きく */
+    border-radius: 2px;
 }
 
 .center-dot {
@@ -126,51 +136,55 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
+  width: 25px; /* 大きくする */
+  height: 25px; /* 大きくする */
   background-color: var(--primary-color);
   border-radius: 50%;
   z-index: 5;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 影を追加 */
 }
 
 .distance-card {
   background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  padding: 2rem; /* 余白を増やす */
+  border-radius: 15px; /* 角を丸く */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 影を濃く */
   text-align: center;
-  min-width: 250px;
+  min-width: 280px; /* 大きくする */
 }
 
 .distance-label {
-  font-size: 1rem;
+  font-size: 1.2rem; /* 大きくする */
   color: var(--secondary-color);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem; /* 余白を増やす */
 }
 
 .distance {
-  font-size: 2rem;
+  font-size: 2.5rem; /* 大きくする */
   font-weight: bold;
   color: var(--primary-color);
 }
 
 .distance-unit {
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* 大きくする */
   color: var(--secondary-color);
-  margin-left: 0.3rem;
+  margin-left: 0.5rem; /* 余白を増やす */
 }
 
 @media (max-width: 480px) {
   .compass {
-    width: 200px;
-    height: 200px;
+    width: 220px; /* 小さくする */
+    height: 220px; /* 小さくする */
   }
 
   .app-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* 小さくする */
   }
 
   .distance {
-    font-size: 1.5rem;
+    font-size: 1.8rem; /* 小さくする */
   }
+    .arrow {
+        height: 90px;
+    }
 }
