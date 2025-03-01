@@ -47,7 +47,7 @@ const App: React.FC = () => {
     <div className="container">
       <h1 className="app-title">皇居コンパス</h1>
       <div className="compass-container">
-        <div className="compass" ref={compassRef}>
+        <div className="compass" ref={compassRef} data-testid="compass">
           <div className="compass-face">
             <div className="compass-rose">
               <div className="direction north">N</div>
@@ -62,7 +62,7 @@ const App: React.FC = () => {
       </div>
       <div className="distance-card">
         <div className="distance-label">皇居までの距離</div>
-        <div className="distance">
+        <div className="distance" data-testid="distance-value">
           {distance ? distance.toFixed(2) : "読み込み中..."}
           <span className="distance-unit">km</span>
         </div>
