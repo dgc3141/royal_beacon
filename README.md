@@ -1,4 +1,4 @@
-## Royal Beacon: App to show distance and direction to the Imperial Palace
+# Royal Beacon: App to show distance and direction to the Imperial Palace
 
 This app is a simple web app that shows the distance and direction from your current location to the Imperial Palace using a compass.
 
@@ -8,7 +8,7 @@ This app is a simple web app that shows the distance and direction from your cur
 - The compass rotates according to the orientation of your smartphone, indicating the direction of the Imperial Palace.
 - Displays labels for North, East, South, and West outside the compass.
 
-### How to Use
+### Getting Started
 
 1. Access [https://dgc3141.github.io/royal_beacon/](https://dgc3141.github.io/royal_beacon/) using your smartphone's web browser.
 2. Allow the app to use your location.
