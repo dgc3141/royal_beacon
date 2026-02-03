@@ -1,37 +1,53 @@
-# Royal Beacon: App to show distance and direction to the Imperial Palace
+# Royal Beacon: 皇居までの距離と方角を表示するアプリ
 
-This app is a simple web app that shows the distance and direction from your current location to the Imperial Palace using a compass.
+このアプリは、現在地から皇居までの直線距離と方角をコンパス状のインターフェースで表示するシンプルなWebアプリです。
 
-### Features
+### 特徴
 
-- Displays the straight-line distance from your current location to the Imperial Palace in kilometers.
-- The compass rotates according to the orientation of your smartphone, indicating the direction of the Imperial Palace.
-- Displays labels for North, East, South, and West outside the compass.
+- **正確な計算**: 現在地から皇居（北の丸公園付近）までの距離をキロメートル単位で表示します。
+- **動的なコンパス**: スマートフォンの向きに合わせてコンパスが回転し、常に皇居の方向を指し示します。
+- **方位表示**: N (北), E (東), S (南), W (西) のラベルを表示します。
+- **モバイル最適化**: iOS (Safari) および Android のブラウザで動作します（iOSではコンパス補正に対応）。
+- **ユーザーフレンドリー**: 位置情報取得中のローディング表示や、エラー時のわかりやすいメッセージ機能を備えています。
 
-### Getting Started
+### 使い方
 
-1. Access [https://dgc3141.github.io/royal_beacon/](https://dgc3141.github.io/royal_beacon/) using your smartphone's web browser.
-2. Allow the app to use your location.
-3. The distance and direction to the Imperial Palace will be displayed on the compass.
-4. Rotate your smartphone, and the compass will also rotate to always indicate the direction of the Imperial Palace.
+1. スマートフォンのWebブラウザで [https://dgc3141.github.io/royal_beacon/](https://dgc3141.github.io/royal_beacon/) にアクセスします。
+2. 位置情報の利用を許可します。
+3. 皇居までの距離がカードに表示され、コンパスの針が皇居の方向を指します。
+4. スマートフォンを回転させると、コンパスも連動して回転し、常に皇居の方向を維持します。
 
-### Technologies
+### 技術スタック
 
-This app is developed using:
+- **React (v19)**: UI開発用の代表的なJavaScriptライブラリ
+- **Vite**: 高速なビルドおよび開発体験を提供する次世代フロントエンドツール
+- **TypeScript**: 静的型付けによる堅牢なコードベース
+- **CSS3 (Vanilla)**: レスポンシブでモダンなデザイン
+- **GitHub Actions**: 継続的なテストとGitHub Pagesへの自動デプロイ
 
-- **React**: JavaScript library for user interface development
-- **TypeScript**: Superset of JavaScript that provides static typing
-- **HTML, CSS**: Describes the structure and style of web pages
-- **GitHub Pages**: Hosting service for static websites
+### 開発
 
-### Developer
+ローカル環境で動かすには以下のコマンドを実行してください：
+
+```bash
+# 依存関係のインストール
+npm install
+
+# 開発サーバーの起動
+npm run dev
+
+# テストの実行
+npm test
+
+# ビルド
+npm run build
+```
+
+### 開発者
 
 - [dgc3141](https://github.com/dgc3141)
 
-### Source Code
+### ライセンス
 
-The source code for this app is available on [GitHub](https://github.com/dgc3141/royal_beacon).
+MIT License
 
-### License
-
-This app is released under the MIT License.
