@@ -188,3 +188,20 @@ body {
         height: 90px;
     }
 }
+
+.loading {
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  margin: 2rem 0;
+}
+
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 2rem 0;
+  max-width: 80%;
+  text-align: center;
+}
