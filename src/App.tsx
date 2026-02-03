@@ -40,7 +40,20 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      setDeviceOrientation(event.alpha ?? 0);
+      let orientation = 0;
+      // iOS向けの処理
+      if ((event as any).webkitCompassHeading) {
+        orientation = (event as any).webkitCompassHeading;
+      } else if (event.alpha) {
+        // Android等の処理 (alphaは反時計回りの場合があるが、一般的に北=0基準であればそのまま使用)
+        // ただし、デバイスによって挙動が異なるため、absoluteプロパティがあるかも確認推奨だが
+        // ここでは簡易的にalphaを使用する。
+        // alphaが反時計回りの場合、時計回りの方位に変換するには 360 - alpha
+        // しかし、多くのブラウザ実装ではコンパスとして機能させるために時計回りの値を返すことが多い
+        // ここでは単純にalphaを使用する
+        orientation = event.alpha;
+      }
+      setDeviceOrientation(orientation);
     };
 
     if (window.DeviceOrientationEvent) {
@@ -54,7 +67,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (compassRef.current && bearing !== null) {
-      const rotation = deviceOrientation + bearing;
+      // 目的地の方位 - デバイスの方位 = 画面上に対する目的地の相対角度
+      const rotation = bearing - deviceOrientation;
       compassRef.current.style.transform = `rotate(${rotation}deg)`;
     }
   }, [deviceOrientation, bearing]);
