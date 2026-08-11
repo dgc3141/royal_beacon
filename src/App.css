@@ -83,6 +83,8 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle at center, #18181b 0%, #0d0d10 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: center center;
 }
 
 .direction {
@@ -132,7 +134,29 @@ body {
   z-index: 10;
   border-radius: 2px;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.permission-btn {
+  background: #ffffff;
+  color: #09090b;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.permission-btn:hover {
+  background: #e4e4e7;
+  transform: translateY(-1px);
+}
+
 
 .arrow::before {
   content: '';
