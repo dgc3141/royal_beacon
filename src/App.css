@@ -1,28 +1,23 @@
 :root {
-  --primary-color: #007bff;
-  /* より鮮やかな青 */
-  --secondary-color: #6c757d;
-  /* 落ち着いたグレー */
-  --accent-color: #ffc107;
-  /* 明るい黄色 */
-  --background-color: #f8f9fa;
-  /* 明るいグレー */
-  --text-color: #343a40;
-  /* 濃いグレー */
-  --compass-bg: #fff;
-  /* コンパスの背景色 */
-  --compass-border: #e0e0e0;
-  /* コンパスのボーダー色 */
-  --arrow-color: #dc3545;
-  /* 矢印の色 */
+  --primary-color: #ffffff;
+  --secondary-color: #a1a1aa;
+  --muted-color: #52525b;
+  --background-bg: #09090b;
+  --text-color: #f4f4f5;
+  --compass-bg: #121215;
+  --compass-border: #27272a;
+  --arrow-north: #ffffff;
+  --arrow-south: #3f3f46;
+  --card-bg: rgba(24, 24, 27, 0.65);
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
 body {
-  background: linear-gradient(135deg, var(--background-color), #ced4da);
+  background: radial-gradient(circle at 50% 30%, #18181b 0%, #09090b 100%);
   color: var(--text-color);
   min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  /* モダンなフォント */
+  font-family: 'Poppins', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .container {
@@ -30,45 +25,43 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 24px;
   box-sizing: border-box;
 }
 
 .app-title {
-  font-size: 2.5rem;
-  /* 大きめのフォントサイズ */
+  font-size: 2.2rem;
   font-weight: 700;
-  margin-bottom: 3rem;
-  /* 余白を増やす */
+  margin-bottom: 2.5rem;
   color: var(--primary-color);
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  /* 影を濃く */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
 }
 
 .compass-container {
   position: relative;
-  margin-bottom: 3rem;
-  /* 余白を増やす */
+  margin-bottom: 2.5rem;
 }
 
 .compass {
   width: 288px;
-  /* 24の倍数に変更 */
   height: 288px;
-  /* 24の倍数に変更 */
   border-radius: 50%;
   background: var(--compass-bg);
   position: relative;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
-  /* 影を濃く */
-  border: 10px solid var(--compass-border);
-  /* ボーダーを太く */
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    inset 0 0 30px rgba(0, 0, 0, 0.9);
+  border: 8px solid var(--compass-border);
   transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  /* より滑らかなアニメーション */
   overflow: hidden;
-  /* はみ出す部分を隠す */
 }
 
 .compass-face {
@@ -86,47 +79,43 @@ body {
 .compass-rose {
   position: absolute;
   width: 90%;
-  /* 少し小さく */
   height: 90%;
-  /* 少し小さく */
   border-radius: 50%;
-  background: linear-gradient(45deg, #f0f0f0, #e8e8e8);
-  /* グラデーション */
+  background: radial-gradient(circle at center, #18181b 0%, #0d0d10 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .direction {
   position: absolute;
-  font-weight: bold;
-  font-size: 1.4rem;
-  /* 大きくする */
+  font-weight: 600;
+  font-size: 1.2rem;
   color: var(--secondary-color);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.05em;
 }
 
 .direction.north {
-  top: 15px;
-  /* 位置調整 */
+  top: 14px;
   left: 50%;
   transform: translateX(-50%);
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
 .direction.east {
-  right: 15px;
-  /* 位置調整 */
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .direction.south {
-  bottom: 15px;
-  /* 位置調整 */
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .direction.west {
-  left: 15px;
-  /* 位置調整 */
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -136,32 +125,27 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -100%);
-  /* 初期角度の回転は削除 */
   transform-origin: bottom center;
-  /* 回転の軸を下端（中心）に設定 */
-  width: 6px;
+  width: 4px;
   height: 110px;
-  background: linear-gradient(to top, var(--arrow-color), var(--arrow-color) 70%, transparent 70%, transparent);
+  background: linear-gradient(to top, var(--arrow-south) 0%, var(--arrow-south) 35%, var(--arrow-north) 35%, var(--arrow-north) 100%);
   z-index: 10;
-  border-radius: 3px;
-  /* 角を丸く */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  /* 影を追加 */
+  border-radius: 2px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
 }
 
 .arrow::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -2px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 24px solid var(--arrow-color);
-  /* 大きく */
-  border-radius: 2px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 22px solid var(--arrow-north);
+  filter: drop-shadow(0 -2px 4px rgba(255, 255, 255, 0.2));
 }
 
 .center-dot {
@@ -169,69 +153,63 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 24px;
-  /* 偶数に変更 */
-  height: 24px;
-  /* 偶数に変更 */
-  background-color: var(--primary-color);
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
   border-radius: 50%;
-  z-index: 5;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  /* 影を追加 */
+  z-index: 15;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  border: 2px solid #18181b;
 }
 
 .distance-card {
-  background: white;
-  padding: 2rem;
-  /* 余白を増やす */
-  border-radius: 15px;
-  /* 角を丸く */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  /* 影を濃く */
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 1.8rem 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   text-align: center;
   min-width: 280px;
-  /* 大きくする */
 }
 
 .distance-label {
-  font-size: 1.2rem;
-  /* 大きくする */
+  font-size: 0.95rem;
+  font-weight: 500;
   color: var(--secondary-color);
-  margin-bottom: 0.8rem;
-  /* 余白を増やす */
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .distance {
-  font-size: 2.5rem;
-  /* 大きくする */
-  font-weight: bold;
+  font-size: 2.8rem;
+  font-weight: 700;
   color: var(--primary-color);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .distance-unit {
-  font-size: 1.4rem;
-  /* 大きくする */
+  font-size: 1.2rem;
+  font-weight: 400;
   color: var(--secondary-color);
-  margin-left: 0.5rem;
-  /* 余白を増やす */
+  margin-left: 0.4rem;
 }
 
 @media (max-width: 480px) {
   .compass {
-    width: 220px;
-    /* 小さくする */
-    height: 220px;
-    /* 小さくする */
+    width: 230px;
+    height: 230px;
   }
 
   .app-title {
     font-size: 1.8rem;
-    /* 小さくする */
   }
 
   .distance {
-    font-size: 1.8rem;
-    /* 小さくする */
+    font-size: 2.2rem;
   }
 
   .arrow {
@@ -240,18 +218,21 @@ body {
 }
 
 .loading {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--secondary-color);
   margin: 2rem 0;
+  letter-spacing: 0.05em;
 }
 
 .error-message {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  padding: 1rem;
-  border-radius: 5px;
+  color: #f4f4f5;
+  background-color: rgba(39, 39, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1.2rem 1.6rem;
+  border-radius: 12px;
   margin: 2rem 0;
   max-width: 80%;
   text-align: center;
+  backdrop-filter: blur(8px);
 }
+
