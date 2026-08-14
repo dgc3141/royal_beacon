@@ -141,30 +141,27 @@
   transition: filter 0.3s ease;
 }
 
-/* Compass Center Display */
-.compass-center-display {
+/* Compass Center Pin */
+.compass-center-pin {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 84px;
-  height: 84px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  border: 2px solid #18181b;
   z-index: 20;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 1px #ffffff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
-.compass-center-display.aligned {
-  border-color: #18181b;
-  box-shadow: 0 0 0 1.5px #18181b, 0 6px 20px rgba(0, 0, 0, 0.1);
+.compass-center-pin.aligned {
+  background: #18181b;
+  box-shadow: 0 0 10px rgba(24, 24, 27, 0.3);
 }
+
 
 @media (max-width: 480px) {
   .compass-outer-ring {

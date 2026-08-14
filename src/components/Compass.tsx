@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { getUnwrappedAngle, normalizeAngle, formatDistance } from '../utils/geo';
+import { getUnwrappedAngle, normalizeAngle } from '../utils/geo';
 
 interface CompassProps {
   heading: number | null;
   bearing: number | null;
-  distanceKm: number | null;
 }
 
-export const Compass: React.FC<CompassProps> = ({ heading, bearing, distanceKm }) => {
+export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
   const roseRef = useRef<HTMLDivElement>(null);
   const needleRef = useRef<HTMLDivElement>(null);
 
@@ -58,9 +57,6 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing, distanceKm }
     return ticks;
   };
 
-  // 距離のフォーマット（中央表示用）
-  const formatted = distanceKm !== null ? formatDistance(distanceKm) : { value: '--', unit: 'km' };
-
   // 皇居とのアライメント（正面 ±5度以内）
   const relativeAngle =
     heading !== null && bearing !== null ? Math.abs(normalizeAngle(bearing - heading + 180) - 180) : null;
@@ -85,18 +81,8 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing, distanceKm }
             <div className="needle-body" />
           </div>
 
-          {/* コンパス中央の距離表示 */}
-          <div
-            className={`compass-center-display ${isAligned ? 'aligned' : ''}`}
-            data-testid="distance-value"
-          >
-            <div className="text-2xl font-extrabold text-zinc-900 leading-none tracking-tight">
-              {formatted.value}
-            </div>
-            <div className="text-[10px] font-bold text-zinc-400 mt-1 uppercase tracking-widest">
-              {formatted.unit}
-            </div>
-          </div>
+          {/* コンパス中央のミニマルなセンターピン */}
+          <div className={`compass-center-pin ${isAligned ? 'aligned' : ''}`} />
         </div>
       </div>
     </div>
