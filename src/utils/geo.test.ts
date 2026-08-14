@@ -21,6 +21,15 @@ describe('geo utilities', () => {
     expect(distance).toBeLessThan(2.0);
   });
 
+  it('高度（標高差）が指定された場合に3次元直線距離を正確に計算できる', () => {
+    const TokyoSkytree = { lat: 35.710063, lng: 139.8107, altitude: 634 };
+    const flatDist = calculateDistance({ lat: 35.710063, lng: 139.8107 }, ImperialPalace, 25);
+    const dist3D = calculateDistance(TokyoSkytree, ImperialPalace, 25);
+    expect(dist3D).toBeGreaterThan(flatDist);
+    // スカイツリー頂上（634m）と皇居（25m）の標高差約609m（0.609km）が加味される
+    expect(dist3D).toBeCloseTo(Math.sqrt(flatDist ** 2 + 0.609 ** 2), 3);
+  });
+
   it('東京駅から皇居へ向かう方位角が北西付近になる', () => {
     const bearing = calculateBearing(TokyoStation, ImperialPalace);
     expect(bearing).toBeGreaterThan(280);

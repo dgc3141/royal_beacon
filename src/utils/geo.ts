@@ -20,17 +20,24 @@ export const getUnwrappedAngle = (current: number, target: number): number => {
 };
 
 /**
- * 2点間の大圏球面距離を計算 (km)
+ * 2点間の球面直線距離（高度が指定された場合は標高差を加味した3次元直線距離）を計算 (km)
  */
-export const calculateDistance = (a: LatLng, b: LatLng): number => {
+export const calculateDistance = (a: LatLng, b: LatLng, targetAltitudeM: number = 0): number => {
   const dLat = toRad(b.lat - a.lat);
   const dLon = toRad(b.lng - a.lng);
   const lat1 = toRad(a.lat);
   const lat2 = toRad(b.lat);
 
   const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  const horizontalDistKm = 2 * EARTH_RADIUS_KM * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
 
-  return 2 * EARTH_RADIUS_KM * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+  // 高度が指定されている場合は3次元ユークリッド大圏距離を計算
+  if (a.altitude !== undefined && a.altitude !== null) {
+    const deltaHeightKm = (a.altitude - targetAltitudeM) / 1000;
+    return Math.sqrt(horizontalDistKm ** 2 + deltaHeightKm ** 2);
+  }
+
+  return horizontalDistKm;
 };
 
 /**

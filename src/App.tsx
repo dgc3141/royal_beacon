@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { IMPERIAL_PALACE_LAT_LNG } from './constants';
+import { IMPERIAL_PALACE_LAT_LNG, IMPERIAL_PALACE_ALTITUDE_M } from './constants';
 import { calculateBearing, calculateDistance, formatDistance } from './utils/geo';
 import { useGeolocation } from './hooks/useGeolocation';
 import { useCompass } from './hooks/useCompass';
@@ -21,7 +21,10 @@ const App: React.FC = () => {
     requestPermission,
   } = useCompass();
 
-  const distanceKm = coords ? calculateDistance(coords, IMPERIAL_PALACE_LAT_LNG) : null;
+  const distanceKm = coords
+    ? calculateDistance(coords, IMPERIAL_PALACE_LAT_LNG, IMPERIAL_PALACE_ALTITUDE_M)
+    : null;
+
   const bearing = coords ? calculateBearing(coords, IMPERIAL_PALACE_LAT_LNG) : null;
 
   const formattedDistance =
