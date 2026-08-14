@@ -7,6 +7,12 @@
   <meta name="theme-color" content="#fafafa" />
   <meta name="description" content="現在地から皇居までの直線距離と方角をリアルタイムに示す、ミニマル・モノトーンなWebコンパスアプリ" />
 
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https://dgc3141.github.io; connect-src 'self'; object-src 'none'; base-uri 'self';" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), payment=(), usb=(), geolocation=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self)" />
+
   <!-- Icons -->
   <link rel="icon" type="image/svg+xml" href="/royal_beacon/icon.svg" />
   <link rel="alternate icon" href="/royal_beacon/favicon.ico" />
