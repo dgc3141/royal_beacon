@@ -28,9 +28,7 @@ export const calculateDistance = (a: LatLng, b: LatLng): number => {
   const lat1 = toRad(a.lat);
   const lat2 = toRad(b.lat);
 
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
 
   return 2 * EARTH_RADIUS_KM * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
 };
@@ -67,7 +65,7 @@ export const calculateMagneticDeclination = (coords: LatLng): number => {
 
 /**
  * 端末の姿勢（alpha, beta, gamma）から傾き補正された真北基準方位角（0° ~ 360°）を計算
- * 
+ *
  * @param alpha 磁北/真北に対するZ軸回転（0 ~ 360）
  * @param beta X軸回転（ピッチ: -180 ~ 180）
  * @param gamma Y軸回転（ロール: -90 ~ 90）

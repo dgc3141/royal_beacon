@@ -8,7 +8,13 @@ import { Compass } from './components/Compass';
 
 const App: React.FC = () => {
   const { coords, accuracy, error: geoError, loading: geoLoading } = useGeolocation();
-  const { heading, permissionNeeded, needsCalibration, error: compassError, requestPermission } = useCompass();
+  const {
+    heading,
+    permissionNeeded,
+    needsCalibration,
+    error: compassError,
+    requestPermission,
+  } = useCompass();
 
   const distanceKm = coords ? calculateDistance(coords, IMPERIAL_PALACE_LAT_LNG) : null;
   const bearing = coords ? calculateBearing(coords, IMPERIAL_PALACE_LAT_LNG) : null;

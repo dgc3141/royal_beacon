@@ -44,20 +44,21 @@
 
 ## 🛠️ Tech Stack
 
-| カテゴリ | 技術 |
-| :--- | :--- |
-| **Framework** | [React 19](https://react.dev/) |
-| **Language** | [TypeScript 5.9](https://www.typescriptlang.org/) |
-| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) / Vanilla CSS |
-| **Build Tool** | [Vite 7](https://vitejs.dev/) |
-| **Testing** | [Vitest](https://vitest.dev/) / React Testing Library |
-| **CI / CD** | GitHub Actions (Auto Deploy to GitHub Pages) |
+| カテゴリ       | 技術                                                      |
+| :------------- | :-------------------------------------------------------- |
+| **Framework**  | [React 19](https://react.dev/)                            |
+| **Language**   | [TypeScript 5.9](https://www.typescriptlang.org/)         |
+| **Styling**    | [Tailwind CSS v4](https://tailwindcss.com/) / Vanilla CSS |
+| **Build Tool** | [Vite 7](https://vitejs.dev/)                             |
+| **Testing**    | [Vitest](https://vitest.dev/) / React Testing Library     |
+| **CI / CD**    | GitHub Actions (Auto Deploy to GitHub Pages)              |
 
 ---
 
 ## 🚀 Getting Started
 
 ### 必要環境
+
 - Node.js `>= 22.0.0`
 - npm
 

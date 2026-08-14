@@ -116,7 +116,6 @@
   will-change: transform;
 }
 
-
 .compass-needle.aligned .needle-head {
   filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
 }
@@ -161,7 +160,6 @@
   background: #18181b;
   box-shadow: 0 0 10px rgba(24, 24, 27, 0.3);
 }
-
 
 @media (max-width: 480px) {
   .compass-outer-ring {

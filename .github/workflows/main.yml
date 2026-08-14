@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -31,9 +31,11 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
+      - name: Format check
+        run: npm run format:check
+
       - name: Build
         run: npm run build
-
 
       - name: Upload build artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
