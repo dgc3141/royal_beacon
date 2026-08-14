@@ -7,10 +7,18 @@ const getScreenAngle = (): number => {
   return window.screen?.orientation?.angle ?? (Number((window as any).orientation) || 0);
 };
 
+const checkPermissionRequired = (): boolean =>
+  typeof DeviceOrientationEvent !== 'undefined' &&
+  typeof (DeviceOrientationEvent as any).requestPermission === 'function';
+
 export const useCompass = (): CompassState => {
   const [heading, setHeading] = useState<number | null>(null);
-  const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
-  const [permissionNeeded, setPermissionNeeded] = useState<boolean>(false);
+  const [permissionGranted, setPermissionGranted] = useState<boolean>(
+    () => !checkPermissionRequired()
+  );
+  const [permissionNeeded, setPermissionNeeded] = useState<boolean>(() =>
+    checkPermissionRequired()
+  );
   const [needsCalibration, setNeedsCalibration] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -111,14 +119,7 @@ export const useCompass = (): CompassState => {
   }, [handleOrientation]);
 
   useEffect(() => {
-    const isPermissionRequired =
-      typeof DeviceOrientationEvent !== 'undefined' &&
-      typeof (DeviceOrientationEvent as any).requestPermission === 'function';
-
-    if (isPermissionRequired) {
-      setPermissionNeeded(true);
-    } else {
-      setPermissionGranted(true);
+    if (!checkPermissionRequired()) {
       registerListeners();
     }
 
