@@ -81,18 +81,24 @@ export const useCompass = (): CompassState => {
   );
 
   const registerListeners = useCallback(() => {
-    if ('ondeviceorientationabsolute' in window) {
+    if (typeof window === 'undefined') return;
+
+    const hasAbsolute = 'ondeviceorientationabsolute' in (window as any);
+    if (hasAbsolute) {
       window.addEventListener('deviceorientationabsolute', handleOrientation as any, { passive: true });
-    } else if (window.DeviceOrientationEvent) {
+    } else if (typeof DeviceOrientationEvent !== 'undefined') {
       window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     }
   }, [handleOrientation]);
 
   const unregisterListeners = useCallback(() => {
-    if ('ondeviceorientationabsolute' in window) {
+    if (typeof window === 'undefined') return;
+
+    const hasAbsolute = 'ondeviceorientationabsolute' in (window as any);
+    if (hasAbsolute) {
       window.removeEventListener('deviceorientationabsolute', handleOrientation as any);
     }
-    if (window.DeviceOrientationEvent) {
+    if (typeof DeviceOrientationEvent !== 'undefined') {
       window.removeEventListener('deviceorientation', handleOrientation);
     }
     if (rafIdRef.current !== null) {
@@ -100,6 +106,9 @@ export const useCompass = (): CompassState => {
       rafIdRef.current = null;
     }
   }, [handleOrientation]);
+
+
+
 
   useEffect(() => {
     const isPermissionRequired =
