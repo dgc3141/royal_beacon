@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { GeolocationState } from '../types';
 
+const ERROR_MESSAGES: Record<number, string> = {
+  1: '位置情報の利用を許可してください。',
+  2: '現在地を取得できませんでした。',
+  3: '位置情報の取得がタイムアウトしました。',
+};
+
 export const useGeolocation = (): GeolocationState => {
   const [state, setState] = useState<GeolocationState>({
     coords: null,
@@ -20,32 +26,20 @@ export const useGeolocation = (): GeolocationState => {
       return;
     }
 
-    const successHandler = (position: GeolocationPosition) => {
+    const successHandler = ({ coords }: GeolocationPosition) => {
       setState({
-        coords: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        },
-        accuracy: position.coords.accuracy,
+        coords: { lat: coords.latitude, lng: coords.longitude },
+        accuracy: coords.accuracy,
         error: null,
         loading: false,
       });
     };
 
-    const errorHandler = (error: GeolocationPositionError) => {
-      let message = '位置情報の取得に失敗しました。';
-      if (error.code === error.PERMISSION_DENIED) {
-        message = '位置情報の利用を許可してください。';
-      } else if (error.code === error.POSITION_UNAVAILABLE) {
-        message = '現在地を取得できませんでした。';
-      } else if (error.code === error.TIMEOUT) {
-        message = '位置情報の取得がタイムアウトしました。';
-      }
-
+    const errorHandler = (err: GeolocationPositionError) => {
       setState({
         coords: null,
         accuracy: null,
-        error: message,
+        error: ERROR_MESSAGES[err.code] ?? '位置情報の取得に失敗しました。',
         loading: false,
       });
     };
@@ -56,9 +50,7 @@ export const useGeolocation = (): GeolocationState => {
       timeout: 10000,
     });
 
-    return () => {
-      navigator.geolocation.clearWatch(watchId);
-    };
+    return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
   return state;
