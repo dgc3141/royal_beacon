@@ -6,61 +6,40 @@ interface CompassProps {
   bearing: number | null;
 }
 
+const TICKS = Array.from({ length: 36 }, (_, i) => i * 10);
+
 export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
   const roseRef = useRef<HTMLDivElement>(null);
   const needleRef = useRef<HTMLDivElement>(null);
 
-  const prevRoseAngleRef = useRef<number | null>(null);
-  const prevNeedleAngleRef = useRef<number | null>(null);
+  const prevRoseRef = useRef<number | null>(null);
+  const prevNeedleRef = useRef<number | null>(null);
 
-  // 端末の向きに応じた回転制御
   useEffect(() => {
-    const currentHeading = heading ?? 0;
+    const current = heading ?? 0;
 
-    // 1. 文字盤: 常に N が真北を指すよう -currentHeading 度回転
+    // 1. 文字盤の回転
     if (roseRef.current) {
-      const targetRose = -currentHeading;
-      if (prevRoseAngleRef.current === null) {
-        prevRoseAngleRef.current = targetRose;
-      } else {
-        prevRoseAngleRef.current = getUnwrappedAngle(prevRoseAngleRef.current, targetRose);
-      }
-      roseRef.current.style.transform = `rotate(${prevRoseAngleRef.current}deg)`;
+      const target = -current;
+      prevRoseRef.current =
+        prevRoseRef.current === null ? target : getUnwrappedAngle(prevRoseRef.current, target);
+      roseRef.current.style.transform = `rotate(${prevRoseRef.current}deg)`;
     }
 
-    // 2. 指針: 画面上での皇居の相対角度 = bearing - currentHeading
+    // 2. 皇居指針の回転
     if (needleRef.current && bearing !== null) {
-      const targetNeedle = bearing - currentHeading;
-      if (prevNeedleAngleRef.current === null) {
-        prevNeedleAngleRef.current = targetNeedle;
-      } else {
-        prevNeedleAngleRef.current = getUnwrappedAngle(prevNeedleAngleRef.current, targetNeedle);
-      }
-      needleRef.current.style.transform = `translate(-50%, -100%) rotate(${prevNeedleAngleRef.current}deg)`;
+      const target = bearing - current;
+      prevNeedleRef.current =
+        prevNeedleRef.current === null ? target : getUnwrappedAngle(prevNeedleRef.current, target);
+      needleRef.current.style.transform = `translate(-50%, -100%) rotate(${prevNeedleRef.current}deg)`;
     }
   }, [heading, bearing]);
 
-  // 目盛り（36分割、10度刻み）の生成
-  const renderTicks = () => {
-    const ticks = [];
-    for (let i = 0; i < 36; i++) {
-      const deg = i * 10;
-      const isMajor = deg % 30 === 0;
-      ticks.push(
-        <div
-          key={deg}
-          className={`tick ${isMajor ? 'major' : 'minor'}`}
-          style={{ transform: `rotate(${deg}deg)` }}
-        />
-      );
-    }
-    return ticks;
-  };
-
   // 皇居とのアライメント（正面 ±5度以内）
-  const relativeAngle =
-    heading !== null && bearing !== null ? Math.abs(normalizeAngle(bearing - heading + 180) - 180) : null;
-  const isAligned = relativeAngle !== null && relativeAngle <= 5;
+  const isAligned =
+    heading !== null &&
+    bearing !== null &&
+    Math.abs(normalizeAngle(bearing - heading + 180) - 180) <= 5;
 
   return (
     <div className="compass-wrapper relative my-auto">
@@ -68,7 +47,15 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
         <div className="compass-inner-housing" data-testid="compass">
           {/* 回転する文字盤 */}
           <div className="compass-rose" ref={roseRef}>
-            <div className="ticks-container">{renderTicks()}</div>
+            <div className="ticks-container">
+              {TICKS.map((deg) => (
+                <div
+                  key={deg}
+                  className={`tick ${deg % 30 === 0 ? 'major' : 'minor'}`}
+                  style={{ transform: `rotate(${deg}deg)` }}
+                />
+              ))}
+            </div>
             <div className="cardinal-label north">N</div>
             <div className="cardinal-label east">E</div>
             <div className="cardinal-label south">S</div>
