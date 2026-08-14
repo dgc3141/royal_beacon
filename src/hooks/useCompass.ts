@@ -86,7 +86,9 @@ export const useCompass = (): CompassState => {
 
     const hasAbsolute = 'ondeviceorientationabsolute' in (window as any);
     if (hasAbsolute) {
-      window.addEventListener('deviceorientationabsolute', handleOrientation as any, { passive: true });
+      window.addEventListener('deviceorientationabsolute', handleOrientation as any, {
+        passive: true,
+      });
     } else if (typeof DeviceOrientationEvent !== 'undefined') {
       window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     }
