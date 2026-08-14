@@ -2,9 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { CompassState } from '../types';
 import { normalizeAngle, calculateCompassHeading } from '../utils/geo';
 
-// センサ針のぶれを滑らかにする基本ローパスフィルター係数
-const BASE_SMOOTHING_FACTOR = 0.25;
-
 export const useCompass = (): CompassState => {
   const [heading, setHeading] = useState<number | null>(null);
   const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
@@ -15,7 +12,7 @@ export const useCompass = (): CompassState => {
   const pendingHeadingRef = useRef<number | null>(null);
   const rafIdRef = useRef<number | null>(null);
 
-  // 指針のノイズ低減フィルター処理（角度差に応じて適応的に補正）
+  // 指針のノイズ低減・静止時ブレ遮断フィルター処理
   const filterHeading = useCallback((rawHeading: number): number => {
     if (prevHeadingRef.current === null) {
       prevHeadingRef.current = rawHeading;
@@ -29,11 +26,27 @@ export const useCompass = (): CompassState => {
     if (diff > 180) diff -= 360;
     if (diff < -180) diff += 360;
 
-    // 急な回転時は追従性を高め、微小なブレはしっかり抑制する
     const absDiff = Math.abs(diff);
-    const dynamicFactor = absDiff > 30 ? 0.6 : BASE_SMOOTHING_FACTOR;
 
-    const smoothed = normalizeAngle(prev + diff * dynamicFactor);
+    // 1. デッドバンド: 0.4°以下の微小なセンサーノイズは静止とみなして無視（ジッター遮断）
+    if (absDiff < 0.4) {
+      return prev;
+    }
+
+    // 2. 多段階適応型ローパスフィルター:
+    // - 微小な揺れ (0.4° ~ 4°): 非常に滑らかに平滑化 (factor = 0.06)
+    // - 中程度の回転 (4° ~ 20°): スムーズに追従 (factor = 0.20)
+    // - 大きな回転 (> 20°): 遅延なく即座に追従 (factor = 0.65)
+    let factor: number;
+    if (absDiff <= 4) {
+      factor = 0.06;
+    } else if (absDiff <= 20) {
+      factor = 0.20;
+    } else {
+      factor = 0.65;
+    }
+
+    const smoothed = normalizeAngle(prev + diff * factor);
     prevHeadingRef.current = smoothed;
     return smoothed;
   }, []);
@@ -89,12 +102,10 @@ export const useCompass = (): CompassState => {
   );
 
   const registerListeners = useCallback(() => {
-    // Android Chrome 等で絶対方位を取得するため deviceorientationabsolute を優先
+    // Android Chrome 等で絶対方位を取得するため deviceorientationabsolute を最優先（重複登録を防止）
     if ('ondeviceorientationabsolute' in window) {
       window.addEventListener('deviceorientationabsolute', handleOrientation as any, { passive: true });
-    }
-    // iOS Safari および標準 deviceorientation
-    if (window.DeviceOrientationEvent) {
+    } else if (window.DeviceOrientationEvent) {
       window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     }
   }, [handleOrientation]);
@@ -158,4 +169,3 @@ export const useCompass = (): CompassState => {
     requestPermission,
   };
 };
-
