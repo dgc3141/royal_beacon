@@ -1,53 +1,98 @@
-# Royal Beacon: 皇居までの距離と方角を表示するアプリ
+<div align="center">
 
-このアプリは、現在地から皇居までの直線距離と方角をコンパス状のインターフェースで表示するシンプルなWebアプリです。
+# 皇居コンパス | ROYAL BEACON
 
-### 特徴
+**現在地から皇居までの直線距離と方角をリアルタイムに示す、ミニマル・モノトーンなWebコンパス**
 
-- **正確な計算**: 現在地から皇居（北の丸公園付近）までの距離をキロメートル単位で表示します。
-- **動的なコンパス**: スマートフォンの向きに合わせてコンパスが回転し、常に皇居の方向を指し示します。
-- **方位表示**: N (北), E (東), S (南), W (西) のラベルを表示します。
-- **モバイル最適化**: iOS (Safari) および Android のブラウザで動作します（iOSではコンパス補正に対応）。
-- **ユーザーフレンドリー**: 位置情報取得中のローディング表示や、エラー時のわかりやすいメッセージ機能を備えています。
+[![React](https://img.shields.io/badge/React-19.0-black?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-black?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-black?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-7.3-black?style=flat-square&logo=vite)](https://vitejs.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-3.0-black?style=flat-square&logo=vitest)](https://vitest.dev/)
+[![License](https://img.shields.io/badge/License-MIT-black?style=flat-square)](LICENSE)
 
-### 使い方
+[🌐 **Live Demo を開く**](https://dgc3141.github.io/royal_beacon/)
 
-1. スマートフォンのWebブラウザで [https://dgc3141.github.io/royal_beacon/](https://dgc3141.github.io/royal_beacon/) にアクセスします。
-2. 位置情報の利用を許可します。
-3. 皇居までの距離がカードに表示され、コンパスの針が皇居の方向を指します。
-4. スマートフォンを回転させると、コンパスも連動して回転し、常に皇居の方向を維持します。
+</div>
 
-### 技術スタック
+---
 
-- **React (v19)**: UI開発用の代表的なJavaScriptライブラリ
-- **Vite**: 高速なビルドおよび開発体験を提供する次世代フロントエンドツール
-- **TypeScript**: 静的型付けによる堅牢なコードベース
-- **CSS3 (Vanilla)**: レスポンシブでモダンなデザイン
-- **GitHub Actions**: 継続的なテストとGitHub Pagesへの自動デプロイ
+## 🏛️ Overview
 
-### 開発
+**Royal Beacon** は、スマートフォンのGPSおよび各種センサーを活用し、現在地から皇居（北緯 35.6851° / 東経 139.7528°）までの直線距離と正確な方角をリアルタイムに指し示すコンパスアプリケーションです。
 
-ローカル環境で動かすには以下のコマンドを実行してください：
+白と黒を基調としたモダン・ミニマルな計器デザインを採用し、Android (Pixel 9 / Chrome) および iOS (Safari) における傾き補正・高精度な追従性を実現しています。
+
+---
+
+## ✨ Features
+
+- 🧭 **3D 傾き補正コンパス (Tilt Compensation)**  
+  W3C準拠の姿勢計算により、スマートフォンを手で斜めに持った状態や直立させた状態でも正確な真北基準方位を算出。
+- ⚡ **超滑らかな 60fps 追従 & RAF 最適化**  
+  高頻度なセンサー更新を `requestAnimationFrame` でスロットリングし、ブレを抑えつつ俊敏に反応する動的ローパスフィルターを搭載。
+- 🎯 **皇居アライメント・フィードバック**  
+  端末の正面が皇居の方向（±5° 以内）を捉えると、コンパス外周と指針が上品に発光して通知。
+- 📏 **高精度な直線距離 & 方位角計算**  
+  大圏航路の測地計算（Haversine式・標準地球平均半径 6371km）による高精度な距離と16方位を表示。
+- 📱 **クロスプラットフォーム対応**  
+  iOS (Safari: `webkitCompassHeading`) および Android (Chrome: `deviceorientationabsolute`) の両方に最適化。
+- 🤍 **モダン・モノトーン UI**  
+  Tailwind CSS v4 と Google Fonts (`Plus Jakarta Sans` / `Noto Sans JP`) による洗練されたデザイン。
+
+---
+
+## 🛠️ Tech Stack
+
+| カテゴリ | 技術 |
+| :--- | :--- |
+| **Framework** | [React 19](https://react.dev/) |
+| **Language** | [TypeScript 5.9](https://www.typescriptlang.org/) |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) / Vanilla CSS |
+| **Build Tool** | [Vite 7](https://vitejs.dev/) |
+| **Testing** | [Vitest](https://vitest.dev/) / React Testing Library |
+| **CI / CD** | GitHub Actions (Auto Deploy to GitHub Pages) |
+
+---
+
+## 🚀 Getting Started
+
+### 必要環境
+- Node.js `>= 22.0.0`
+- npm
+
+### インストール & 開発
 
 ```bash
+# リポジトリのクローン
+git clone https://github.com/dgc3141/royal_beacon.git
+cd royal_beacon
+
 # 依存関係のインストール
 npm install
 
-# 開発サーバーの起動
+# ローカル開発サーバーの起動 (Vite)
 npm run dev
 
-# テストの実行
+# ユニットテストの実行 (Vitest)
 npm test
 
-# ビルド
+# プロダクションビルド
 npm run build
 ```
 
-### 開発者
+---
 
-- [dgc3141](https://github.com/dgc3141)
+## 📍 Target Coordinates
 
-### ライセンス
+- **皇居 (Tokyo Imperial Palace)**: `35.685175° N, 139.752800° E`
 
-MIT License
+---
 
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+<div align="center">
+  <sub>Crafted with precision by <a href="https://github.com/dgc3141">dgc3141</a></sub>
+</div>
