@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { getUnwrappedAngle, getCardinalDirection, normalizeAngle } from '../utils/geo';
+import { getUnwrappedAngle, normalizeAngle } from '../utils/geo';
 
 interface CompassProps {
   heading: number | null;
@@ -57,17 +57,13 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
     return ticks;
   };
 
-  // 中央表示: 端末が向いている現在の方位角
-  const displayHeading = heading !== null ? Math.round(heading) : null;
-  const cardinalText = displayHeading !== null ? getCardinalDirection(displayHeading) : '--';
-
   // 皇居とのアライメント（正面 ±5度以内）
   const relativeAngle =
     heading !== null && bearing !== null ? Math.abs(normalizeAngle(bearing - heading + 180) - 180) : null;
   const isAligned = relativeAngle !== null && relativeAngle <= 5;
 
   return (
-    <div className="compass-wrapper relative my-6">
+    <div className="compass-wrapper relative my-auto">
       <div className={`compass-outer-ring ${isAligned ? 'aligned' : ''}`}>
         <div className="compass-inner-housing" data-testid="compass">
           {/* 回転する文字盤 */}
@@ -85,19 +81,10 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
             <div className="needle-body" />
           </div>
 
-          {/* コンパス中央のデジタル数値（現在向いている方位） */}
-          <div className={`compass-center-display ${isAligned ? 'aligned' : ''}`}>
-            <div className="text-[1.35rem] font-bold text-zinc-900 leading-none tracking-tight">
-              {displayHeading !== null ? `${displayHeading}°` : '--'}
-            </div>
-            <div className="text-[11px] font-semibold text-zinc-500 mt-1 tracking-wider">
-              {cardinalText}
-            </div>
-          </div>
+          {/* コンパス中央のミニマルなセンターピン */}
+          <div className={`compass-center-pin ${isAligned ? 'aligned' : ''}`} />
         </div>
       </div>
     </div>
   );
 };
-
-
