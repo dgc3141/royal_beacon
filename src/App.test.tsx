@@ -67,5 +67,9 @@ describe('皇居コンパスアプリ', () => {
     const distanceElement = screen.getByTestId('distance-value');
     expect(distanceElement).toBeInTheDocument();
     expect(distanceElement).not.toHaveTextContent('--');
+
+    const bearingElement = screen.getByText(/皇居の方角:/);
+    expect(bearingElement).toBeInTheDocument();
   });
 });
+

@@ -40,9 +40,10 @@ const App: React.FC = () => {
         {!geoLoading && !geoError && (
           <>
             <Compass heading={heading} bearing={bearing} />
-            <DistanceCard distanceKm={distanceKm} accuracy={accuracy} />
+            <DistanceCard distanceKm={distanceKm} accuracy={accuracy} bearing={bearing} />
           </>
         )}
+
       </main>
 
       <footer className="app-footer">
