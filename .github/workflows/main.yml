@@ -28,8 +28,12 @@ jobs:
         env:
           CI: true
 
+      - name: Type check
+        run: npm run typecheck
+
       - name: Build
         run: npm run build
+
 
       - name: Upload build artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
