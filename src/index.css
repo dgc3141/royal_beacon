@@ -35,3 +35,12 @@ body,
   min-height: 100%;
   background-color: #fafafa;
 }
+
+@media (prefers-color-scheme: dark) {
+  body,
+  html,
+  #root {
+    background-color: #09090b;
+    color: #f4f4f5;
+  }
+}

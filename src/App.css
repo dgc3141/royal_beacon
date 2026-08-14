@@ -175,3 +175,67 @@
     height: 98px;
   }
 }
+
+/* --- Dark Mode Support (prefers-color-scheme: dark) --- */
+@media (prefers-color-scheme: dark) {
+  .compass-outer-ring {
+    background: linear-gradient(135deg, #18181b 0%, #09090b 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 16px 40px -8px rgba(0, 0, 0, 0.5),
+      inset 0 1px 2px rgba(255, 255, 255, 0.05);
+  }
+
+  .compass-outer-ring.aligned {
+    box-shadow:
+      0 0 0 1.5px #ffffff,
+      0 0 30px rgba(255, 255, 255, 0.15),
+      0 20px 45px -8px rgba(0, 0, 0, 0.6),
+      inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  }
+
+  .compass-inner-housing {
+    background: #121215;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .tick {
+    background: #3f3f46;
+  }
+
+  .tick.major {
+    background: #f4f4f5;
+  }
+
+  .cardinal-label {
+    color: #71717a;
+  }
+
+  .cardinal-label.north {
+    color: #ffffff;
+  }
+
+  .needle-body {
+    background: linear-gradient(to top, #3f3f46 0%, #3f3f46 40%, #ffffff 40%, #ffffff 100%);
+  }
+
+  .needle-head {
+    border-bottom-color: #ffffff;
+  }
+
+  .compass-needle.aligned .needle-head {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  }
+
+  .compass-center-pin {
+    background: #18181b;
+    border-color: #f4f4f5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .compass-center-pin.aligned {
+    background: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  }
+}
