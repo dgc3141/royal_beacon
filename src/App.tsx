@@ -28,10 +28,10 @@ const App: React.FC = () => {
   const combinedError = geoError || compassError;
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-zinc-900 flex flex-col items-center justify-between p-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))] max-w-md mx-auto relative select-none">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 flex flex-col items-center justify-between p-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))] max-w-md mx-auto relative select-none">
       {/* 8の字キャリブレーション要求ガイド（センサー異常時のみ一時表示） */}
       {needsCalibration && (
-        <div className="fixed top-[max(1.5rem,env(safe-area-inset-top))] bg-zinc-900/90 text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce">
+        <div className="fixed top-[max(1.5rem,env(safe-area-inset-top))] bg-zinc-900/90 dark:bg-zinc-100/90 text-white dark:text-zinc-900 text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce">
           <span className="text-base font-mono">∿</span>
           <span>端末を8の字に動かして校正してください</span>
         </div>
@@ -39,7 +39,7 @@ const App: React.FC = () => {
 
       {/* Header: 最小限のタイトル */}
       <header className="text-center pt-2">
-        <h1 className="text-xs font-bold tracking-[0.25em] text-zinc-400 uppercase">
+        <h1 className="text-xs font-bold tracking-[0.25em] text-zinc-400 dark:text-zinc-500 uppercase">
           皇居コンパス
         </h1>
       </header>
@@ -47,13 +47,13 @@ const App: React.FC = () => {
       {/* Main: コンパス ＋ 直下に大きく距離を表示 */}
       <main className="w-full flex-1 flex flex-col items-center justify-center">
         {geoLoading && (
-          <div className="text-xs font-medium text-zinc-400 animate-pulse tracking-wider">
+          <div className="text-xs font-medium text-zinc-400 dark:text-zinc-500 animate-pulse tracking-wider">
             GPS取得中...
           </div>
         )}
 
         {combinedError && (
-          <div className="bg-zinc-900 text-white px-5 py-3 rounded-2xl text-xs font-medium max-w-xs text-center shadow-lg">
+          <div className="bg-zinc-900 dark:bg-zinc-800 text-white px-5 py-3 rounded-2xl text-xs font-medium max-w-xs text-center shadow-lg">
             {combinedError}
           </div>
         )}
@@ -61,7 +61,7 @@ const App: React.FC = () => {
         {permissionNeeded && !geoLoading && !combinedError && (
           <div className="text-center">
             <button
-              className="bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-white text-xs font-semibold px-6 py-3 rounded-full shadow-md cursor-pointer transition-all"
+              className="bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 active:scale-95 text-white text-xs font-semibold px-6 py-3 rounded-full shadow-md cursor-pointer transition-all"
               onClick={requestPermission}
             >
               コンパスを有効化
@@ -75,10 +75,10 @@ const App: React.FC = () => {
 
             {/* コンパスの外側の下に大きく距離を表示 */}
             <div className="mt-8 flex items-baseline justify-center" data-testid="distance-value">
-              <span className="text-6xl sm:text-7xl font-extrabold text-zinc-900 tracking-tight leading-none">
+              <span className="text-6xl sm:text-7xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none">
                 {formattedDistance.value}
               </span>
-              <span className="text-2xl sm:text-3xl font-medium text-zinc-400 ml-2.5">
+              <span className="text-2xl sm:text-3xl font-medium text-zinc-400 dark:text-zinc-500 ml-2.5">
                 {formattedDistance.unit}
               </span>
             </div>
@@ -89,7 +89,7 @@ const App: React.FC = () => {
       {/* Footer: GPS精度のみ極小表示 */}
       <footer className="h-6 flex items-center justify-center">
         {accuracy !== null && !geoLoading && (
-          <span className="text-[10px] font-medium text-zinc-300 tracking-wider">
+          <span className="text-[10px] font-medium text-zinc-300 dark:text-zinc-600 tracking-wider">
             ±{Math.round(accuracy)}m
           </span>
         )}
