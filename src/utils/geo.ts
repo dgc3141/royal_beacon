@@ -77,6 +77,62 @@ export const getCardinalDirection = (angle: number): CardinalDirection => {
 };
 
 /**
+ * 端末の姿勢（alpha, beta, gamma）から、傾き補正された真北基準の方位角（0° ~ 360°）を計算
+ * 
+ * @param alpha 磁北/真北に対するZ軸回転（0 ~ 360）
+ * @param beta X軸回転（ピッチ: -180 ~ 180）
+ * @param gamma Y軸回転（ロール: -90 ~ 90）
+ * @param screenAngle 画面の回転角（0, 90, 180, 270）
+ */
+export const calculateCompassHeading = (
+  alpha: number | null,
+  beta: number | null = 0,
+  gamma: number | null = 0,
+  screenAngle: number = 0
+): number | null => {
+  if (alpha === null || isNaN(alpha)) return null;
+
+  const b = beta ?? 0;
+  const g = gamma ?? 0;
+
+  // 水平置き（beta, gamma がほぼ0）の場合
+  if (Math.abs(b) < 1 && Math.abs(g) < 1) {
+    return normalizeAngle(360 - alpha + screenAngle);
+  }
+
+  const degToRad = Math.PI / 180;
+  const radA = alpha * degToRad;
+  const radB = b * degToRad;
+  const radG = g * degToRad;
+
+  const cA = Math.cos(radA);
+  const sA = Math.sin(radA);
+  const cB = Math.cos(radB);
+  const sB = Math.sin(radB);
+  const cG = Math.cos(radG);
+  const sG = Math.sin(radG);
+
+  // W3C DeviceOrientation 仕様に基づく回転行列成分
+  // 端末を立てた状態での水平面ベクトル成分
+  const rA = -cA * sG - sA * sB * cG;
+  const rB = -sA * sG + cA * sB * cG;
+
+  // 端末の上部（+Y軸）の水平面ベクトル成分
+  const topA = -sA * cB;
+  const topB = cA * cB;
+
+  // ピッチ角 (beta) の大きさに応じて、水平持ち（+Y軸優先）と直立持ち（視線方向優先）をブレンド
+  const pitchWeight = Math.abs(sB);
+  const finalA = topA * (1 - pitchWeight * pitchWeight) + rA * (pitchWeight * pitchWeight);
+  const finalB = topB * (1 - pitchWeight * pitchWeight) + rB * (pitchWeight * pitchWeight);
+
+  let headingRad = Math.atan2(finalA, finalB);
+  let headingDeg = (headingRad * 180) / Math.PI;
+
+  return normalizeAngle(headingDeg + screenAngle);
+};
+
+/**
  * 距離を表示用文字列に整形（例: "1.25 km" または "850 m"）
  */
 export const formatDistance = (distanceKm: number): { value: string; unit: string } => {
@@ -86,3 +142,4 @@ export const formatDistance = (distanceKm: number): { value: string; unit: strin
   }
   return { value: distanceKm.toFixed(2), unit: 'km' };
 };
+

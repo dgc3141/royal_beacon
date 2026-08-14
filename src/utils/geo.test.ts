@@ -6,6 +6,7 @@ import {
   getUnwrappedAngle,
   getCardinalDirection,
   formatDistance,
+  calculateCompassHeading,
 } from './geo';
 
 describe('geo utility functions', () => {
@@ -48,4 +49,37 @@ describe('geo utility functions', () => {
     expect(formatDistance(0.45)).toEqual({ value: '450', unit: 'm' });
     expect(formatDistance(3.256)).toEqual({ value: '3.26', unit: 'km' });
   });
+
+  describe('calculateCompassHeading (傾き補正コンパス方位角計算)', () => {
+    it('平置き状態（beta=0, gamma=0）で方位角が正しく計算される', () => {
+      // alpha = 0 -> 360/0 (北)
+      expect(calculateCompassHeading(0, 0, 0)).toBe(0);
+      // alpha = 90 -> 270 (西) W3Cの反時計回りalphaから時計回り方位へ
+      expect(calculateCompassHeading(90, 0, 0)).toBe(270);
+      // alpha = 270 -> 90 (東)
+      expect(calculateCompassHeading(270, 0, 0)).toBe(90);
+      // alpha = 180 -> 180 (南)
+      expect(calculateCompassHeading(180, 0, 0)).toBe(180);
+    });
+
+    it('端末を45度傾けた（beta=45, gamma=0）場合でも方位角が狂わない', () => {
+      const headingNorth = calculateCompassHeading(0, 45, 0);
+      expect(headingNorth).toBeCloseTo(0, 1);
+
+      const headingEast = calculateCompassHeading(270, 45, 0);
+      expect(headingEast).toBeCloseTo(90, 1);
+    });
+
+    it('画面回転（screenAngle）が加味される', () => {
+      // alpha=0 (北), screenAngle=90 (横画面) -> 90度
+      expect(calculateCompassHeading(0, 0, 0, 90)).toBe(90);
+      expect(calculateCompassHeading(0, 0, 0, 270)).toBe(270);
+    });
+
+    it('alpha が null または NaN の場合は null を返す', () => {
+      expect(calculateCompassHeading(null)).toBeNull();
+      expect(calculateCompassHeading(NaN)).toBeNull();
+    });
+  });
 });
+
