@@ -6,11 +6,13 @@ import { useGeolocation } from './hooks/useGeolocation';
 import { useCompass } from './hooks/useCompass';
 import { useWakeLock } from './hooks/useWakeLock';
 import { useOnlineStatus } from './hooks/useOnlineStatus';
+import { usePWAInstall } from './hooks/usePWAInstall';
 import { Compass } from './components/Compass';
 
 const App: React.FC = () => {
   useWakeLock();
   const isOnline = useOnlineStatus();
+  const { isInstallable, triggerInstall } = usePWAInstall();
   const { coords, accuracy, error: geoError, loading: geoLoading } = useGeolocation();
 
   const {
@@ -121,7 +123,7 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {/* Footer: GPS精度 ＋ オフライン状態 */}
+      {/* Footer: GPS精度 ＋ オフライン状態 ＋ PWAインストール */}
       <footer className="h-6 flex items-center justify-center gap-3">
         {!isOnline && (
           <span
@@ -140,6 +142,15 @@ const App: React.FC = () => {
           >
             ±{Math.round(accuracy)}m
           </span>
+        )}
+        {isInstallable && (
+          <button
+            onClick={triggerInstall}
+            className="text-[10px] font-semibold text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 underline underline-offset-2 cursor-pointer transition-colors"
+            aria-label="アプリをホーム画面にインストール"
+          >
+            インストール
+          </button>
         )}
       </footer>
     </div>
