@@ -50,13 +50,36 @@ export const calculateBearing = (a: LatLng, b: LatLng): number => {
 };
 
 /**
+ * 緯度・経度から地磁気偏角（度）を計算（国土地理院 2020年地磁気モデル近似式）
+ * 戻り値: 西偏は負、東偏は正（例: 東京では約 -7.6°）
+ */
+export const calculateMagneticDeclination = (coords: LatLng): number => {
+  const dLat = coords.lat - 37.0;
+  const dLng = coords.lng - 138.0;
+
+  // 国土地理院 2020年値の日本列島近似多項式（単位: 分を度に換算）
+  const declinationMinutes = 460.0 + 19.5 * dLat - 4.9 * dLng;
+  const declinationDeg = declinationMinutes / 60.0;
+
+  // 西偏のため負値で返す
+  return -declinationDeg;
+};
+
+/**
  * 端末の姿勢（alpha, beta, gamma）から傾き補正された真北基準方位角（0° ~ 360°）を計算
+ * 
+ * @param alpha 磁北/真北に対するZ軸回転（0 ~ 360）
+ * @param beta X軸回転（ピッチ: -180 ~ 180）
+ * @param gamma Y軸回転（ロール: -90 ~ 90）
+ * @param screenAngle 画面の回転角（0, 90, 180, 270）
+ * @param declination 地磁気偏角補正値（度）
  */
 export const calculateCompassHeading = (
   alpha: number | null,
   beta: number | null = 0,
   gamma: number | null = 0,
-  screenAngle: number = 0
+  screenAngle: number = 0,
+  declination: number = 0
 ): number | null => {
   if (alpha === null || isNaN(alpha)) return null;
 
@@ -65,7 +88,7 @@ export const calculateCompassHeading = (
 
   // 手持ちコンパス（ピッチ 70度以下）: ロール手振れノイズを遮断し真北基準方位（360 - alpha）を維持
   if (Math.abs(b) < 70) {
-    return normalizeAngle(360 - alpha + screenAngle);
+    return normalizeAngle(360 - alpha + screenAngle + declination);
   }
 
   // 端末をほぼ垂直に立てた場合（70度〜90度）: 3D回転行列補正
@@ -83,7 +106,7 @@ export const calculateCompassHeading = (
   const finalA = topA * (1 - uprightWeight) + rA * uprightWeight;
   const finalB = topB * (1 - uprightWeight) + rB * uprightWeight;
 
-  return normalizeAngle(toDeg(Math.atan2(finalA, finalB)) + screenAngle);
+  return normalizeAngle(toDeg(Math.atan2(finalA, finalB)) + screenAngle + declination);
 };
 
 /**
