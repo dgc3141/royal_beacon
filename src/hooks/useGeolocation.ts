@@ -33,12 +33,17 @@ export const useGeolocation = (): GeolocationState => {
       watchId = navigator.geolocation.watchPosition(
         ({ coords }) => {
           setState({
-            coords: { lat: coords.latitude, lng: coords.longitude },
+            coords: {
+              lat: coords.latitude,
+              lng: coords.longitude,
+              altitude: coords.altitude,
+            },
             accuracy: coords.accuracy,
             error: null,
             loading: false,
           });
         },
+
         (err) => {
           setState({
             coords: null,
