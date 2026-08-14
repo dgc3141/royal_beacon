@@ -56,12 +56,24 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
     wasAlignedRef.current = isAligned;
   }, [isAligned]);
 
+  const accessibilityLabel =
+    heading !== null && bearing !== null
+      ? `コンパス: 端末の方位 ${Math.round(heading)}度、皇居の方位 ${Math.round(bearing)}度${
+          isAligned ? '（皇居の正面を向いています）' : ''
+        }`
+      : 'コンパス: 計測待機中';
+
   return (
     <div className="compass-wrapper relative my-auto">
       <div className={`compass-outer-ring ${isAligned ? 'aligned' : ''}`}>
-        <div className="compass-inner-housing" data-testid="compass">
+        <div
+          className="compass-inner-housing"
+          data-testid="compass"
+          role="img"
+          aria-label={accessibilityLabel}
+        >
           {/* 回転する文字盤 */}
-          <div className="compass-rose" ref={roseRef}>
+          <div className="compass-rose" ref={roseRef} aria-hidden="true">
             <div className="ticks-container">
               {TICKS.map((deg) => (
                 <div
@@ -78,13 +90,17 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
           </div>
 
           {/* 回転する皇居指針 */}
-          <div className={`compass-needle ${isAligned ? 'aligned' : ''}`} ref={needleRef}>
+          <div
+            className={`compass-needle ${isAligned ? 'aligned' : ''}`}
+            ref={needleRef}
+            aria-hidden="true"
+          >
             <div className="needle-head" />
             <div className="needle-body" />
           </div>
 
           {/* コンパス中央のミニマルなセンターピン */}
-          <div className={`compass-center-pin ${isAligned ? 'aligned' : ''}`} />
+          <div className={`compass-center-pin ${isAligned ? 'aligned' : ''}`} aria-hidden="true" />
         </div>
       </div>
     </div>

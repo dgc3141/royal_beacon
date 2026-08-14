@@ -27,12 +27,24 @@ const App: React.FC = () => {
 
   const combinedError = geoError || compassError;
 
+  const distanceAriaLabel =
+    distanceKm !== null
+      ? `皇居までの直線距離: ${formattedDistance.value} ${
+          formattedDistance.unit === 'km' ? 'キロメートル' : 'メートル'
+        }`
+      : '皇居までの直線距離を計算中';
+
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 flex flex-col items-center justify-between p-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))] max-w-md mx-auto relative select-none">
       {/* 8の字キャリブレーション要求ガイド（センサー異常時のみ一時表示） */}
       {needsCalibration && (
-        <div className="fixed top-[max(1.5rem,env(safe-area-inset-top))] bg-zinc-900/90 dark:bg-zinc-100/90 text-white dark:text-zinc-900 text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce">
-          <span className="text-base font-mono">∿</span>
+        <div
+          role="alert"
+          className="fixed top-[max(1.5rem,env(safe-area-inset-top))] bg-zinc-900/90 dark:bg-zinc-100/90 text-white dark:text-zinc-900 text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce"
+        >
+          <span className="text-base font-mono" aria-hidden="true">
+            ∿
+          </span>
           <span>端末を8の字に動かして校正してください</span>
         </div>
       )}
@@ -47,13 +59,19 @@ const App: React.FC = () => {
       {/* Main: コンパス ＋ 直下に大きく距離を表示 */}
       <main className="w-full flex-1 flex flex-col items-center justify-center">
         {geoLoading && (
-          <div className="text-xs font-medium text-zinc-400 dark:text-zinc-500 animate-pulse tracking-wider">
+          <div
+            role="status"
+            className="text-xs font-medium text-zinc-400 dark:text-zinc-500 animate-pulse tracking-wider"
+          >
             GPS取得中...
           </div>
         )}
 
         {combinedError && (
-          <div className="bg-zinc-900 dark:bg-zinc-800 text-white px-5 py-3 rounded-2xl text-xs font-medium max-w-xs text-center shadow-lg">
+          <div
+            role="alert"
+            className="bg-zinc-900 dark:bg-zinc-800 text-white px-5 py-3 rounded-2xl text-xs font-medium max-w-xs text-center shadow-lg"
+          >
             {combinedError}
           </div>
         )}
@@ -74,11 +92,23 @@ const App: React.FC = () => {
             <Compass heading={heading} bearing={bearing} />
 
             {/* コンパスの外側の下に大きく距離を表示 */}
-            <div className="mt-8 flex items-baseline justify-center" data-testid="distance-value">
-              <span className="text-6xl sm:text-7xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none">
+            <div
+              className="mt-8 flex items-baseline justify-center"
+              data-testid="distance-value"
+              role="region"
+              aria-live="polite"
+              aria-label={distanceAriaLabel}
+            >
+              <span
+                className="text-6xl sm:text-7xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight leading-none"
+                aria-hidden="true"
+              >
                 {formattedDistance.value}
               </span>
-              <span className="text-2xl sm:text-3xl font-medium text-zinc-400 dark:text-zinc-500 ml-2.5">
+              <span
+                className="text-2xl sm:text-3xl font-medium text-zinc-400 dark:text-zinc-500 ml-2.5"
+                aria-hidden="true"
+              >
                 {formattedDistance.unit}
               </span>
             </div>
@@ -89,7 +119,10 @@ const App: React.FC = () => {
       {/* Footer: GPS精度のみ極小表示 */}
       <footer className="h-6 flex items-center justify-center">
         {accuracy !== null && !geoLoading && (
-          <span className="text-[10px] font-medium text-zinc-300 dark:text-zinc-600 tracking-wider">
+          <span
+            className="text-[10px] font-medium text-zinc-300 dark:text-zinc-600 tracking-wider"
+            aria-label={`GPS測位精度: 約${Math.round(accuracy)}メートル`}
+          >
             ±{Math.round(accuracy)}m
           </span>
         )}
