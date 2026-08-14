@@ -28,17 +28,17 @@ const App: React.FC = () => {
   const combinedError = geoError || compassError;
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-zinc-900 flex flex-col items-center justify-between p-6 max-w-md mx-auto relative select-none">
+    <div className="min-h-screen bg-[#fafafa] text-zinc-900 flex flex-col items-center justify-between p-6 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))] max-w-md mx-auto relative select-none">
       {/* 8の字キャリブレーション要求ガイド（センサー異常時のみ一時表示） */}
       {needsCalibration && (
-        <div className="fixed top-6 bg-zinc-900/90 text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce">
+        <div className="fixed top-[max(1.5rem,env(safe-area-inset-top))] bg-zinc-900/90 text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce">
           <span className="text-base font-mono">∿</span>
           <span>端末を8の字に動かして校正してください</span>
         </div>
       )}
 
       {/* Header: 最小限のタイトル */}
-      <header className="text-center pt-4">
+      <header className="text-center pt-2">
         <h1 className="text-xs font-bold tracking-[0.25em] text-zinc-400 uppercase">
           皇居コンパス
         </h1>
