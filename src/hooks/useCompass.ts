@@ -113,7 +113,21 @@ export const useCompass = (): CompassState => {
       registerListeners();
     }
 
-    return unregisterListeners;
+    // ライフサイクル連動: バックグラウンド時にセンサー監視を停止してバッテリー消費を抑制
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        registerListeners();
+      } else {
+        unregisterListeners();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      unregisterListeners();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, [registerListeners, unregisterListeners]);
 
   const requestPermission = async () => {
