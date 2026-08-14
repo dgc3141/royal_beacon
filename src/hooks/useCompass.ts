@@ -11,6 +11,7 @@ export const useCompass = (): CompassState => {
   const [heading, setHeading] = useState<number | null>(null);
   const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
   const [permissionNeeded, setPermissionNeeded] = useState<boolean>(false);
+  const [needsCalibration, setNeedsCalibration] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const prevHeadingRef = useRef<number | null>(null);
@@ -107,9 +108,6 @@ export const useCompass = (): CompassState => {
     }
   }, [handleOrientation]);
 
-
-
-
   useEffect(() => {
     const isPermissionRequired =
       typeof DeviceOrientationEvent !== 'undefined' &&
@@ -121,6 +119,15 @@ export const useCompass = (): CompassState => {
       setPermissionGranted(true);
       registerListeners();
     }
+
+    // 8の字キャリブレーション要求検知
+    const handleCalibration = (e: Event) => {
+      e.preventDefault();
+      setNeedsCalibration(true);
+      setTimeout(() => setNeedsCalibration(false), 8000);
+    };
+
+    window.addEventListener('compassneedscalibration', handleCalibration);
 
     // ライフサイクル連動: バックグラウンド時にセンサー監視を停止してバッテリー消費を抑制
     const handleVisibilityChange = () => {
@@ -135,6 +142,7 @@ export const useCompass = (): CompassState => {
 
     return () => {
       unregisterListeners();
+      window.removeEventListener('compassneedscalibration', handleCalibration);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [registerListeners, unregisterListeners]);
@@ -158,6 +166,7 @@ export const useCompass = (): CompassState => {
     heading,
     permissionGranted,
     permissionNeeded,
+    needsCalibration,
     error,
     requestPermission,
   };
