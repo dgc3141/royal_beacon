@@ -8,21 +8,25 @@ const ERROR_MESSAGES: Record<number, string> = {
 };
 
 export const useGeolocation = (): GeolocationState => {
-  const [state, setState] = useState<GeolocationState>({
-    coords: null,
-    accuracy: null,
-    error: null,
-    loading: true,
-  });
-
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setState({
+  const [state, setState] = useState<GeolocationState>(() => {
+    if (typeof navigator !== 'undefined' && !navigator.geolocation) {
+      return {
         coords: null,
         accuracy: null,
         error: 'お使いのブラウザは位置情報をサポートしていません。',
         loading: false,
-      });
+      };
+    }
+    return {
+      coords: null,
+      accuracy: null,
+      error: null,
+      loading: true,
+    };
+  });
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
       return;
     }
 
@@ -43,7 +47,6 @@ export const useGeolocation = (): GeolocationState => {
             loading: false,
           });
         },
-
         (err) => {
           setState({
             coords: null,
