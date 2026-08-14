@@ -14,6 +14,7 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
 
   const prevRoseRef = useRef<number | null>(null);
   const prevNeedleRef = useRef<number | null>(null);
+  const wasAlignedRef = useRef<boolean>(false);
 
   useEffect(() => {
     const current = heading ?? 0;
@@ -40,6 +41,20 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
     heading !== null &&
     bearing !== null &&
     Math.abs(normalizeAngle(bearing - heading + 180) - 180) <= 5;
+
+  // アライメント成立時の触覚フィードバック（Haptic Feedback）
+  useEffect(() => {
+    if (isAligned && !wasAlignedRef.current) {
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        try {
+          navigator.vibrate(15);
+        } catch {
+          // Vibration API 失敗時は安全に無視
+        }
+      }
+    }
+    wasAlignedRef.current = isAligned;
+  }, [isAligned]);
 
   return (
     <div className="compass-wrapper relative my-auto">
