@@ -44,7 +44,7 @@ describe('皇居コンパスアプリ', () => {
     });
 
     render(<App />);
-    const loadingElement = screen.getByText('GPS位置情報を取得中...');
+    const loadingElement = screen.getByText('GPS取得中...');
     expect(loadingElement).toBeInTheDocument();
   });
 
@@ -52,7 +52,7 @@ describe('皇居コンパスアプリ', () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.queryByText('GPS位置情報を取得中...')).not.toBeInTheDocument();
+      expect(screen.queryByText('GPS取得中...')).not.toBeInTheDocument();
     });
 
     const titleElement = screen.getByText('皇居コンパス');
@@ -61,15 +61,8 @@ describe('皇居コンパスアプリ', () => {
     const compassElement = screen.getByTestId('compass');
     expect(compassElement).toBeInTheDocument();
 
-    const distanceLabelElement = screen.getByText('皇居までの直線距離');
-    expect(distanceLabelElement).toBeInTheDocument();
-
     const distanceElement = screen.getByTestId('distance-value');
     expect(distanceElement).toBeInTheDocument();
     expect(distanceElement).not.toHaveTextContent('--');
-
-    const bearingElement = screen.getByText(/皇居の方角:/);
-    expect(bearingElement).toBeInTheDocument();
   });
 });
-

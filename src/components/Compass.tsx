@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { getUnwrappedAngle, getCardinalDirection, normalizeAngle } from '../utils/geo';
+import { getUnwrappedAngle, normalizeAngle, formatDistance } from '../utils/geo';
 
 interface CompassProps {
   heading: number | null;
   bearing: number | null;
+  distanceKm: number | null;
 }
 
-export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
+export const Compass: React.FC<CompassProps> = ({ heading, bearing, distanceKm }) => {
   const roseRef = useRef<HTMLDivElement>(null);
   const needleRef = useRef<HTMLDivElement>(null);
 
@@ -57,9 +58,8 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
     return ticks;
   };
 
-  // 中央表示: 端末が向いている現在の方位角
-  const displayHeading = heading !== null ? Math.round(heading) : null;
-  const cardinalText = displayHeading !== null ? getCardinalDirection(displayHeading) : '--';
+  // 距離のフォーマット（中央表示用）
+  const formatted = distanceKm !== null ? formatDistance(distanceKm) : { value: '--', unit: 'km' };
 
   // 皇居とのアライメント（正面 ±5度以内）
   const relativeAngle =
@@ -67,7 +67,7 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
   const isAligned = relativeAngle !== null && relativeAngle <= 5;
 
   return (
-    <div className="compass-wrapper relative my-6">
+    <div className="compass-wrapper relative my-auto">
       <div className={`compass-outer-ring ${isAligned ? 'aligned' : ''}`}>
         <div className="compass-inner-housing" data-testid="compass">
           {/* 回転する文字盤 */}
@@ -85,13 +85,16 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
             <div className="needle-body" />
           </div>
 
-          {/* コンパス中央のデジタル数値（現在向いている方位） */}
-          <div className={`compass-center-display ${isAligned ? 'aligned' : ''}`}>
-            <div className="text-[1.35rem] font-bold text-zinc-900 leading-none tracking-tight">
-              {displayHeading !== null ? `${displayHeading}°` : '--'}
+          {/* コンパス中央の距離表示 */}
+          <div
+            className={`compass-center-display ${isAligned ? 'aligned' : ''}`}
+            data-testid="distance-value"
+          >
+            <div className="text-2xl font-extrabold text-zinc-900 leading-none tracking-tight">
+              {formatted.value}
             </div>
-            <div className="text-[11px] font-semibold text-zinc-500 mt-1 tracking-wider">
-              {cardinalText}
+            <div className="text-[10px] font-bold text-zinc-400 mt-1 uppercase tracking-widest">
+              {formatted.unit}
             </div>
           </div>
         </div>
@@ -99,5 +102,3 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
     </div>
   );
 };
-
-
