@@ -8,7 +8,7 @@ import { Compass } from './components/Compass';
 
 const App: React.FC = () => {
   const { coords, accuracy, error: geoError, loading: geoLoading } = useGeolocation();
-  const { heading, permissionNeeded, error: compassError, requestPermission } = useCompass();
+  const { heading, permissionNeeded, needsCalibration, error: compassError, requestPermission } = useCompass();
 
   const distanceKm = coords ? calculateDistance(coords, IMPERIAL_PALACE_LAT_LNG) : null;
   const bearing = coords ? calculateBearing(coords, IMPERIAL_PALACE_LAT_LNG) : null;
@@ -20,6 +20,14 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#fafafa] text-zinc-900 flex flex-col items-center justify-between p-6 max-w-md mx-auto relative select-none">
+      {/* 8の字キャリブレーション要求ガイド（センサー異常時のみ一時表示） */}
+      {needsCalibration && (
+        <div className="fixed top-6 bg-zinc-900/90 text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2 z-50 animate-bounce">
+          <span className="text-base font-mono">∿</span>
+          <span>端末を8の字に動かして校正してください</span>
+        </div>
+      )}
+
       {/* Header: 最小限のタイトル */}
       <header className="text-center pt-4">
         <h1 className="text-xs font-bold tracking-[0.25em] text-zinc-400 uppercase">
