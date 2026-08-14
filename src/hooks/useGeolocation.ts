@@ -26,31 +26,55 @@ export const useGeolocation = (): GeolocationState => {
       return;
     }
 
-    const successHandler = ({ coords }: GeolocationPosition) => {
-      setState({
-        coords: { lat: coords.latitude, lng: coords.longitude },
-        accuracy: coords.accuracy,
-        error: null,
-        loading: false,
-      });
+    let watchId: number | null = null;
+
+    const startWatching = () => {
+      if (watchId !== null) return;
+      watchId = navigator.geolocation.watchPosition(
+        ({ coords }) => {
+          setState({
+            coords: { lat: coords.latitude, lng: coords.longitude },
+            accuracy: coords.accuracy,
+            error: null,
+            loading: false,
+          });
+        },
+        (err) => {
+          setState({
+            coords: null,
+            accuracy: null,
+            error: ERROR_MESSAGES[err.code] ?? '位置情報の取得に失敗しました。',
+            loading: false,
+          });
+        },
+        { enableHighAccuracy: true, maximumAge: 1000, timeout: 10000 }
+      );
     };
 
-    const errorHandler = (err: GeolocationPositionError) => {
-      setState({
-        coords: null,
-        accuracy: null,
-        error: ERROR_MESSAGES[err.code] ?? '位置情報の取得に失敗しました。',
-        loading: false,
-      });
+    const stopWatching = () => {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+      }
     };
 
-    const watchId = navigator.geolocation.watchPosition(successHandler, errorHandler, {
-      enableHighAccuracy: true,
-      maximumAge: 1000,
-      timeout: 10000,
-    });
+    startWatching();
 
-    return () => navigator.geolocation.clearWatch(watchId);
+    // ライフサイクル連動: バックグラウンド時にGPS監視を停止してバッテリー消費を抑制
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        startWatching();
+      } else {
+        stopWatching();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      stopWatching();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   return state;
