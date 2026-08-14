@@ -5,10 +5,12 @@ import { calculateBearing, calculateDistance, formatDistance } from './utils/geo
 import { useGeolocation } from './hooks/useGeolocation';
 import { useCompass } from './hooks/useCompass';
 import { useWakeLock } from './hooks/useWakeLock';
+import { useOnlineStatus } from './hooks/useOnlineStatus';
 import { Compass } from './components/Compass';
 
 const App: React.FC = () => {
   useWakeLock();
+  const isOnline = useOnlineStatus();
   const { coords, accuracy, error: geoError, loading: geoLoading } = useGeolocation();
 
   const {
@@ -116,8 +118,18 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {/* Footer: GPS精度のみ極小表示 */}
-      <footer className="h-6 flex items-center justify-center">
+      {/* Footer: GPS精度 ＋ オフライン状態 */}
+      <footer className="h-6 flex items-center justify-center gap-3">
+        {!isOnline && (
+          <span
+            className="text-[10px] font-medium text-amber-600 dark:text-amber-400 tracking-wider flex items-center gap-1"
+            role="status"
+            aria-label="現在オフラインで動作中です（GPS測位中）"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block animate-pulse" />
+            オフライン
+          </span>
+        )}
         {accuracy !== null && !geoLoading && (
           <span
             className="text-[10px] font-medium text-zinc-300 dark:text-zinc-600 tracking-wider"
