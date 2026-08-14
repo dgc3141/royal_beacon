@@ -1,95 +1,34 @@
-:root {
-  --bg-dark: #09090b;
-  --bg-card: rgba(24, 24, 27, 0.65);
-  --text-main: #f4f4f5;
-  --text-muted: #a1a1aa;
-  --text-dim: #71717a;
-  --border-light: rgba(255, 255, 255, 0.08);
-  --border-accent: rgba(255, 255, 255, 0.15);
-  --compass-glow: rgba(255, 255, 255, 0.1);
-  --needle-north: #ffffff;
-  --needle-south: #3f3f46;
-}
-
-body {
-  background: radial-gradient(circle at 50% 25%, #18181b 0%, #09090b 100%);
-  color: var(--text-main);
-  min-height: 100vh;
-  font-family: 'Poppins', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: -0.01em;
-}
-
-.app-root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 100vh;
-  padding: 32px 24px;
-  box-sizing: border-box;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.app-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.app-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
-}
-
-.app-subtitle {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.25em;
-  color: var(--text-dim);
-  margin-top: 4px;
-}
-
-.app-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  flex: 1;
-  justify-content: center;
-}
-
-/* --- Compass Component --- */
-.compass-wrapper {
-  position: relative;
-  margin-bottom: 2.5rem;
-}
+/* --- Compass Geometric Layout & Modern White Minimal Theme --- */
 
 .compass-outer-ring {
   width: 290px;
   height: 290px;
   border-radius: 50%;
   padding: 8px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4f5 100%);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 24px 60px rgba(0, 0, 0, 0.85),
-    inset 0 0 20px rgba(0, 0, 0, 0.8);
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 16px 40px -8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  transition: box-shadow 0.3s ease;
+}
+
+.compass-outer-ring.aligned {
+  box-shadow:
+    0 0 0 1.5px #18181b,
+    0 0 25px rgba(24, 24, 27, 0.12),
+    0 20px 45px -8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .compass-inner-housing {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #121215;
+  background: #ffffff;
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--border-light);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .compass-rose {
@@ -115,29 +54,27 @@ body {
 
 .tick {
   position: absolute;
-  top: 6px;
+  top: 8px;
   left: 50%;
   width: 1px;
-  height: 8px;
-  background: var(--text-dim);
-  transform-origin: 50% 139px;
-  opacity: 0.4;
+  height: 7px;
+  background: #d4d4d8;
+  transform-origin: 50% 137px;
 }
 
 .tick.major {
-  width: 2px;
+  width: 1.5px;
   height: 12px;
-  top: 4px;
-  background: var(--text-muted);
-  opacity: 0.8;
+  top: 6px;
+  background: #18181b;
 }
 
 /* Cardinal Labels */
 .cardinal-label {
   position: absolute;
   font-weight: 600;
-  font-size: 1.15rem;
-  color: var(--text-muted);
+  font-size: 1.1rem;
+  color: #71717a;
   letter-spacing: 0.05em;
 }
 
@@ -145,13 +82,12 @@ body {
   top: 22px;
   left: 50%;
   transform: translateX(-50%);
-  color: #ffffff;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  color: #09090b;
+  font-weight: 800;
 }
 
 .cardinal-label.east {
-  right: 24px;
+  right: 22px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -163,7 +99,7 @@ body {
 }
 
 .cardinal-label.west {
-  left: 24px;
+  left: 22px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -173,23 +109,23 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 4px;
+  width: 3.5px;
   height: 115px;
   transform-origin: bottom center;
   z-index: 10;
   transition: transform 0.08s ease-out;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
   will-change: transform;
 }
 
 .compass-needle.aligned .needle-head {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5));
 }
 
 .needle-body {
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top, var(--needle-south) 0%, var(--needle-south) 40%, var(--needle-north) 40%, var(--needle-north) 100%);
+  background: linear-gradient(to top, #d4d4d8 0%, #d4d4d8 40%, #18181b 40%, #18181b 100%);
   border-radius: 2px;
 }
 
@@ -200,10 +136,9 @@ body {
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-bottom: 20px solid var(--needle-north);
-  filter: drop-shadow(0 -2px 6px rgba(255, 255, 255, 0.4));
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 18px solid #18181b;
   transition: filter 0.3s ease;
 }
 
@@ -216,197 +151,33 @@ body {
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  background: #18181b;
-  border: 1px solid var(--border-accent);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 20;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 1px #ffffff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .compass-center-display.aligned {
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15), inset 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-.compass-outer-ring.aligned {
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.15),
-    0 0 30px rgba(255, 255, 255, 0.1),
-    0 24px 60px rgba(0, 0, 0, 0.85),
-    inset 0 0 20px rgba(0, 0, 0, 0.8);
-  transition: box-shadow 0.3s ease;
-}
-
-.degree-num {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1;
-}
-
-.direction-txt {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-top: 3px;
-  letter-spacing: 0.05em;
-}
-
-
-/* --- Distance Card Component --- */
-.distance-card-container {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 1.6rem 2.2rem;
-  border-radius: 24px;
-  border: 1px solid var(--border-light);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.distance-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.6rem;
-}
-
-.distance-label {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.accuracy-badge {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 3px 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.distance-value-wrapper {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-}
-
-.distance-number {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-
-.distance-unit {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  margin-left: 0.5rem;
-}
-
-.distance-bearing-info {
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--border-light);
-}
-
-/* Status & Notices */
-
-.status-message {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  margin: 2rem 0;
-  letter-spacing: 0.05em;
-}
-
-.error-message {
-  color: #f4f4f5;
-  background-color: rgba(39, 39, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 1.2rem 1.6rem;
-  border-radius: 16px;
-  text-align: center;
-  max-width: 90%;
-  backdrop-filter: blur(8px);
-}
-
-.permission-notice {
-  text-align: center;
-  margin-bottom: 2rem;
-  background: rgba(24, 24, 27, 0.6);
-  padding: 1.4rem;
-  border-radius: 16px;
-  border: 1px solid var(--border-light);
-}
-
-.permission-text {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-bottom: 1rem;
-}
-
-.permission-btn {
-  background: #ffffff;
-  color: #09090b;
-  border: none;
-  padding: 0.8rem 1.8rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 30px;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25);
-  transition: all 0.2s ease;
-}
-
-.permission-btn:hover {
-  background: #e4e4e7;
-  transform: translateY(-1px);
-}
-
-.app-footer {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-  margin-top: 1.5rem;
-  text-transform: uppercase;
+  border-color: #18181b;
+  box-shadow: 0 0 0 1.5px #18181b, 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 480px) {
   .compass-outer-ring {
-    width: 245px;
-    height: 245px;
+    width: 250px;
+    height: 250px;
   }
 
   .tick {
-    transform-origin: 50% 116px;
+    transform-origin: 50% 117px;
   }
 
   .compass-needle {
-    height: 95px;
-  }
-
-  .distance-number {
-    font-size: 2.4rem;
-  }
-
-  .app-title {
-    font-size: 1.8rem;
+    height: 98px;
   }
 }

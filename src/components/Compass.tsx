@@ -67,7 +67,7 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
   const isAligned = relativeAngle !== null && relativeAngle <= 5;
 
   return (
-    <div className="compass-wrapper">
+    <div className="compass-wrapper relative my-6">
       <div className={`compass-outer-ring ${isAligned ? 'aligned' : ''}`}>
         <div className="compass-inner-housing" data-testid="compass">
           {/* 回転する文字盤 */}
@@ -87,12 +87,17 @@ export const Compass: React.FC<CompassProps> = ({ heading, bearing }) => {
 
           {/* コンパス中央のデジタル数値（現在向いている方位） */}
           <div className={`compass-center-display ${isAligned ? 'aligned' : ''}`}>
-            <div className="degree-num">{displayHeading !== null ? `${displayHeading}°` : '--'}</div>
-            <div className="direction-txt">{cardinalText}</div>
+            <div className="text-[1.35rem] font-bold text-zinc-900 leading-none tracking-tight">
+              {displayHeading !== null ? `${displayHeading}°` : '--'}
+            </div>
+            <div className="text-[11px] font-semibold text-zinc-500 mt-1 tracking-wider">
+              {cardinalText}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 
