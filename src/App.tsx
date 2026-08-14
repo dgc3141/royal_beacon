@@ -4,10 +4,13 @@ import { IMPERIAL_PALACE_LAT_LNG } from './constants';
 import { calculateBearing, calculateDistance, formatDistance } from './utils/geo';
 import { useGeolocation } from './hooks/useGeolocation';
 import { useCompass } from './hooks/useCompass';
+import { useWakeLock } from './hooks/useWakeLock';
 import { Compass } from './components/Compass';
 
 const App: React.FC = () => {
+  useWakeLock();
   const { coords, accuracy, error: geoError, loading: geoLoading } = useGeolocation();
+
   const {
     heading,
     permissionNeeded,
