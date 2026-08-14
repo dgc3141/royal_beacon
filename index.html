@@ -3,20 +3,40 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#fafafa" />
-  <meta name="description" content="皇居コンパス - 皇居への直線距離と方角をリアルタイムに示すコンパスアプリ" />
+  <meta name="description" content="現在地から皇居までの直線距離と方角をリアルタイムに示す、ミニマル・モノトーンなWebコンパスアプリ" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="/royal_beacon/icon.svg" />
+  <link rel="alternate icon" href="/royal_beacon/favicon.ico" />
+  <link rel="apple-touch-icon" href="/royal_beacon/icon.svg" />
+  <link rel="manifest" href="/royal_beacon/manifest.json" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dgc3141.github.io/royal_beacon/" />
+  <meta property="og:title" content="皇居コンパス | Royal Beacon" />
+  <meta property="og:description" content="現在地から皇居までの直線距離と方角をリアルタイムに示す、ミニマル・モノトーンなWebコンパスアプリ" />
+  <meta property="og:image" content="https://dgc3141.github.io/royal_beacon/icon.svg" />
+  <meta property="og:site_name" content="皇居コンパス" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="皇居コンパス | Royal Beacon" />
+  <meta name="twitter:description" content="現在地から皇居までの直線距離と方角をリアルタイムに示す、ミニマル・モノトーンなWebコンパスアプリ" />
+  <meta name="twitter:image" content="https://dgc3141.github.io/royal_beacon/icon.svg" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="manifest" href="/manifest.json" />
+
   <title>皇居コンパス | Royal Beacon</title>
-
-
 </head>
 
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <noscript>皇居コンパスを利用するにはJavaScriptを有効にしてください。</noscript>
   <div id="root"></div>
   <script type="module" src="/src/index.tsx"></script>
 </body>
