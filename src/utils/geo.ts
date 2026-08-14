@@ -95,11 +95,13 @@ export const calculateCompassHeading = (
   const b = beta ?? 0;
   const g = gamma ?? 0;
 
-  // 水平置き（beta, gamma がほぼ0）の場合
-  if (Math.abs(b) < 1 && Math.abs(g) < 1) {
+  // 手持ちコンパス利用（ピッチ角 70度以下）では、ロールによる手振れノイズを遮断し
+  // 端末上部（+Y軸）が向く真北基準方位（360 - alpha）を基調として極めて安定して計算
+  if (Math.abs(b) < 70) {
     return normalizeAngle(360 - alpha + screenAngle);
   }
 
+  // 端末をほぼ垂直（70度〜90度）に立ててカメラ・視線方向を向ける場合のみ3D回転行列補正
   const degToRad = Math.PI / 180;
   const radA = alpha * degToRad;
   const radB = b * degToRad;
@@ -112,25 +114,23 @@ export const calculateCompassHeading = (
   const cG = Math.cos(radG);
   const sG = Math.sin(radG);
 
-  // W3C DeviceOrientation 仕様に基づく回転行列成分
-  // 端末を立てた状態での水平面ベクトル成分
   const rA = -cA * sG - sA * sB * cG;
   const rB = -sA * sG + cA * sB * cG;
 
-  // 端末の上部（+Y軸）の水平面ベクトル成分
   const topA = -sA * cB;
   const topB = cA * cB;
 
-  // ピッチ角 (beta) の大きさに応じて、水平持ち（+Y軸優先）と直立持ち（視線方向優先）をブレンド
-  const pitchWeight = Math.abs(sB);
-  const finalA = topA * (1 - pitchWeight * pitchWeight) + rA * (pitchWeight * pitchWeight);
-  const finalB = topB * (1 - pitchWeight * pitchWeight) + rB * (pitchWeight * pitchWeight);
+  // 70度〜90度の間で滑らかにブレンド
+  const uprightWeight = Math.min(1, Math.max(0, (Math.abs(b) - 70) / 20));
+  const finalA = topA * (1 - uprightWeight) + rA * uprightWeight;
+  const finalB = topB * (1 - uprightWeight) + rB * uprightWeight;
 
   let headingRad = Math.atan2(finalA, finalB);
   let headingDeg = (headingRad * 180) / Math.PI;
 
   return normalizeAngle(headingDeg + screenAngle);
 };
+
 
 /**
  * 距離を表示用文字列に整形（例: "1.25 km" または "850 m"）
